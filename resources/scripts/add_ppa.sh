@@ -9,6 +9,10 @@ echo "$0: Adding MRS ROS2 Unstable PPA repository"
 
 sudo apt-get -y install curl gpg dpkg-dev
 
+if [ ! -f /etc/ros/rosdep/sources.list.d/20-default.list ]; then
+  sudo rosdep init
+fi
+
 ARCH=$(dpkg-architecture -qDEB_HOST_ARCH)
 
 curl -s --compressed "https://ctu-mrs.github.io/ppa2-unstable/ctu-mrs.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/ctu-mrs.gpg >/dev/null
