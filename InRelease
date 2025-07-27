@@ -1,0 +1,39 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Date: Sun, 27 Jul 2025 01:00:55 +0000
+Label: unstable
+Origin: ctu-mrs
+MD5Sum:
+ fffe77b40b4012f8665c6441e33b9964            58286 Packages
+ 07534148836d7f1cc1429c2b57c5286c            11192 Packages.gz
+ d6c9910fbb69a56278359c242646f6c4               70 Release
+SHA1:
+ 4332768c46ca54c5887bce0b7f39642ebaeaac72            58286 Packages
+ 171e8b6387134abdb37682ecaab4efc29e34ec41            11192 Packages.gz
+ bf3f0f60ec13aa5a5e4fbea7b5d9e89a7b7cf68c               70 Release
+SHA256:
+ 7372cbc9317a9cad5a50f0eb608700052b2ecb405cae818daa1a5b1ac4bfda05            58286 Packages
+ f0bf533d6e415b71399133f1b39be0fc8a62b5aea032d39a21ceb31d708c5a0d            11192 Packages.gz
+ 417b6f6f84182e50974c529530036afa26e89ce58dfb5682d9090306b1241493               70 Release
+SHA512:
+ 84726377a083c4baca446dbb7da86023eda140ce18d5926b06181654f97cb92aca0cd4753e4b1b3a9e961d9a0f37cb5ceac6bbd5f2c5ac5c9da3724514ad9f8c            58286 Packages
+ ebe82da360e929035a02f8906b9ccd6c44d63c559d86e471aee6eefd471d4591a8b74da42f6ee0e4fb8364787041c6c949efe03426c3ea4630e0d8005618581a            11192 Packages.gz
+ 24b4d2a96c2be8122a77ee9f0c8886db858e1c4ea62cbac5b6753e1a1f2c164f306036607adfa09fcb1891ac9af3faa6c8decec295c3c1dff7d4093eb459343d               70 Release
+-----BEGIN PGP SIGNATURE-----
+
+iQJLBAEBCgA1FiEEb03deYxGy/GR9vy/sp02ABwZjREFAmiFekcXHHRvbWFzLmJh
+Y2FAZmVsLmN2dXQuY3oACgkQsp02ABwZjRHwJxAAqTZAU9yUWHY25HTkngHBUnuS
+ZGn+6cz75M9gcK1+7tCyR/cNfrsC6BuAQGIWYONZ6Bw6eTRjLu2pzhKkjf4HIk08
+MbQraLiYyGBUaHnBxDnHg0haUTYe6Hf/JKYAQPS+oqpXqT+5EJG2YkxSe12+E8kQ
+HZwlQisYlJcz2Sb3Ptbvr9nzLezLOx7pSN1ErJjtcXvc/LFaF8S+eO1Hcbz8M4Ri
+fG2ZfIJEeGoz+KzzV56ClOD6wjDemcnxu2TIGQSqqHop9PYm0psgamMp0XtrG/y+
+rZf28/aScLTlTYB6V87S4vCj0yLKy4vyCpNsY2uvNx8BSCTBoQ7RwydTnZSwj8la
+PFRQzYhRhSvRcOkMQGw9MDa1GdPL47XBIMNZDyoBrkgR2pMgBLLXf2rqMoigF/kd
+Kaqaz5nyJZUW1/QnnjhpvHjiSKUohjqPjEHcvYcrTxyvzG5ic8lsHqRUXb0aTzBz
+Y1Qi09RL/QRDD2BlDZ90Nt9ybHODOf/GFgjRpuXGlNlISqy4Nwi+Dp6jKomtwgRg
+0W2aysYJCusQa2mse3x//qJBOLLQsG5Cmf46IQT206X2T8B0NCxREEvwxNeArVxo
+o2PSD2Sjg+PUk2lxqixBi4H3UFl1xJL2paThw+6ybyw9C2MObXN6oTBMpTYUsNoZ
+jXWDqCQKvRFEpClflIE=
+=aNPK
+-----END PGP SIGNATURE-----
