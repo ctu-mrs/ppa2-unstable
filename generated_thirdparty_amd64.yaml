@@ -1,0 +1,15 @@
+mrs_realsense:
+    ubuntu: [ros-jazzy-mrs-realsense]
+  
+ouster_sensor_msgs:
+    ubuntu: [ros-jazzy-ouster-sensor-msgs]
+  
+ouster_ros:
+    ubuntu: [ros-jazzy-ouster-ros]
+  
+bluefox2:
+    ubuntu: [ros-jazzy-bluefox2]
+  
+nlopt:
+    ubuntu: [ros-jazzy-nlopt]
+  
