@@ -19,6 +19,9 @@ mrs_uav_testing:
 mrs_serial:
     ubuntu: [ros-jazzy-mrs-serial]
   
+mrs_vins_imu_filter:
+    ubuntu: [ros-jazzy-mrs-vins-imu-filter]
+  
 mrs_uav_autostart:
     ubuntu: [ros-jazzy-mrs-uav-autostart]
   
