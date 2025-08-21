@@ -18,7 +18,7 @@ mrs_open_vins_core:
   ubuntu: [ros-jazzy-mrs-open-vins-core]
 
 ov_msckf:
-  ubuntu: [ros-jazzy-ov_msckf]
+  ubuntu: [ros-jazzy-ov-msckf]
 
 # other dependencies
 python3-jinja2:
