@@ -17,6 +17,9 @@ mrs_mpc_solvers:
 mrs_open_vins_core:
   ubuntu: [ros-jazzy-mrs-open-vins-core]
 
+ov_msckf:
+  ubuntu: [ros-jazzy-ov_msckf]
+
 # other dependencies
 python3-jinja2:
   ubuntu: [python3-jinja2]
