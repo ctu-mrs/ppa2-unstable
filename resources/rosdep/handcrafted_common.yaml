@@ -14,24 +14,6 @@ mrs-geographiclib-datasets:
 mrs_mpc_solvers:
   ubuntu: [ros-jazzy-mrs-mpc-solvers]
 
-mrs_open_vins_core:
-  ubuntu: [ros-jazzy-mrs-open-vins-core]
-
-mrs_vins_republisher:
-  ubuntu: [ros-jazzy-mrs-vins-republisher]
-
-ov_core:
-  ubuntu: [ros-jazzy-ov-core]
-
-ov_eval:
-  ubuntu: [ros-jazzy-ov-eval]
-
-ov_init:
-  ubuntu: [ros-jazzy-ov-init]
-
-ov_msckf:
-  ubuntu: [ros-jazzy-ov-msckf]
-
 # other dependencies
 python3-jinja2:
   ubuntu: [python3-jinja2]
