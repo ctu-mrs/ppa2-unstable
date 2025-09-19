@@ -18,9 +18,6 @@ mrs_mpc_solvers:
 px4:
   ubuntu: [ros-jazzy-px4]
 
-mrs_gazebo_common_resources:
-  ubuntu: [ros-jazzy-mrs-gazebo-common-resources]
-
 # other dependencies
 python3-jinja2:
   ubuntu: [python3-jinja2]
