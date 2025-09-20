@@ -1,14 +1,23 @@
+mrs_realsense:
+    ubuntu: [ros-jazzy-mrs-realsense]
+  
+ouster_sensor_msgs:
+    ubuntu: [ros-jazzy-ouster-sensor-msgs]
+  
+ouster_ros:
+    ubuntu: [ros-jazzy-ouster-ros]
+  
 ov_core:
     ubuntu: [ros-jazzy-ov-core]
   
 ov_data:
     ubuntu: [ros-jazzy-ov-data]
   
-ov_eval:
-    ubuntu: [ros-jazzy-ov-eval]
-  
 ov_init:
     ubuntu: [ros-jazzy-ov-init]
+  
+ov_eval:
+    ubuntu: [ros-jazzy-ov-eval]
   
 ov_msckf:
     ubuntu: [ros-jazzy-ov-msckf]
@@ -22,15 +31,6 @@ octomap_ros:
 octomap_rviz_plugins:
     ubuntu: [ros-jazzy-octomap-rviz-plugins]
   
-ouster_sensor_msgs:
-    ubuntu: [ros-jazzy-ouster-sensor-msgs]
-  
-ouster_ros:
-    ubuntu: [ros-jazzy-ouster-ros]
-  
 nlopt:
     ubuntu: [ros-jazzy-nlopt]
-  
-mrs_realsense:
-    ubuntu: [ros-jazzy-mrs-realsense]
   
