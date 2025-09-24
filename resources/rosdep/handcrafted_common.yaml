@@ -18,8 +18,8 @@ mrs_mpc_solvers:
 px4:
   ubuntu: [ros-jazzy-px4]
 
-mrs_uav_gazebo_simulator:
-  ubuntu: [ros-jazzy-mrs-uav-gazebo-simulator]
+flame:
+  ubuntu: [ros-jazzy-flame]
 
 # other dependencies
 python3-jinja2:
