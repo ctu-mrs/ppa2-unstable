@@ -21,6 +21,9 @@ px4:
 flame:
   ubuntu: [ros-jazzy-flame]
 
+flame_ros_msgs:
+  ubuntu: [ros-jazzy-flame-ros-msgs]
+
 # other dependencies
 python3-jinja2:
   ubuntu: [python3-jinja2]
