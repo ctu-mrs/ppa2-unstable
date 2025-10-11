@@ -1,0 +1,39 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Date: Sat, 11 Oct 2025 15:31:18 +0000
+Label: unstable
+Origin: ctu-mrs
+MD5Sum:
+ 3822105cc4b9856182dab968bb1dd604            93008 Packages
+ 9298e0ada5ca57e64a5c963f2f6c0e6c            17946 Packages.gz
+ 1afd5bfd54f14a9139845dc2a425a128               70 Release
+SHA1:
+ 2697bb01bc4055ceb53cc134af2dd12e7333644a            93008 Packages
+ 2d3c38bf38b58f9ea1c21f13751fc4c42b1c6fd3            17946 Packages.gz
+ 79a5eda6a8aca25e8110896198a16e5db5ea479f               70 Release
+SHA256:
+ 6116c118e79379887d66c1bb988f495b12c9f77d0acbd8dc5cf3cf43d809ee3e            93008 Packages
+ 183b8ca330916350713f1fa3a49eb4e1ee1e8e29cd5b69be1efe5268eadc6518            17946 Packages.gz
+ 00cda9018e9dde4e8a50b8ae0060135794cb18e390664eda186f05544600cbd8               70 Release
+SHA512:
+ db2d084bc880a10a0075a3473835c9c9b00b3347fb896e1a8a4c7c41b817663abc0cabd3b234ff314e7e0866d777f511279d18baf13ad46a8c60c2eac96cf1bd            93008 Packages
+ ffb404468b1b4b679be08b9e0063f02aa890d5683a6cfb8d0b12ba8248229695cde2aaed51e8f0020c0e448b9dea7041a9a25510e82944ed368dd4b56cdef5ab            17946 Packages.gz
+ 023e48d05ca0e5acc7d5ba79efc5ff50529ce94a110fc877b3a2fbf01cf343348f1932fdac45d3141dc667a2e83c3ae0aa02dbca17b027b3251e85f442c4143b               70 Release
+-----BEGIN PGP SIGNATURE-----
+
+iQJLBAEBCgA1FiEEb03deYxGy/GR9vy/sp02ABwZjREFAmjqeEYXHHRvbWFzLmJh
+Y2FAZmVsLmN2dXQuY3oACgkQsp02ABwZjRGdpxAAq9IMO2qClhJKg5rfhkrlza5t
+6j5WekgNqqzEA/gLB5RgdmZyGkC9VSE+E1ni+xWUmrAFTO8eeH2Y+mL5lZQ91u8R
+6GiAUIJY5V2RGQaSyR+/U7gckS0dfMSj9xJ/MSgQvO3DbZn/ER0Iz7PVh1cpBoH0
+cFJ68M2mSimXv0B3/mWaAmnE0ped7I+BNqmwd+rQJkjbT5Hqyn822rIpZ+xBMkb0
++IMusM+r/wKXjNBZ0qk3nk6vE5GGx4zHXJGOzyAJUDnipVQK6eN3VqK6pxtjSedz
+9ti1OrdAb2eG6wPitkH78zbgM/cGyIuyq/HC8kQDPRAvcgtE871nRz3APQM2Eqw9
+5Jkququ2iHgAiokWdGLh9kQGmAl3neiTBLi3ylhicNAHyfpmvVkwUx924WPORoZF
+QUm8cgFkbuzYQ6ykzbfKE+iysYY6oM4JMZ6OUy6npzKt5uteeTIMYIQYA87HMUrC
+K/QgeehTaec7LQq+IVxw2zCc2nzPRW7m7o1M3Ip7nttalEXWTkBkLxmKWwonh7jF
+OX36rXLfzk2nrGIgSY8XMTYOthrQjRaCop6q76uGSsdE2MAEPZPxOhMW83CmBY9z
+3TycYizA2Jo90+6MztgI8wn79A7/Y2xv22sCICR7REL4nb2JgVtIHnEtmTsQiXmB
+ndTZazICuQ2YfS5BPYU=
+=trhA
+-----END PGP SIGNATURE-----
