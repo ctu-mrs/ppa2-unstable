@@ -16,11 +16,11 @@ ov_core:
 ov_data:
     ubuntu: [ros-jazzy-ov-data]
   
-ov_init:
-    ubuntu: [ros-jazzy-ov-init]
-  
 ov_eval:
     ubuntu: [ros-jazzy-ov-eval]
+  
+ov_init:
+    ubuntu: [ros-jazzy-ov-init]
   
 ov_msckf:
     ubuntu: [ros-jazzy-ov-msckf]
@@ -40,9 +40,9 @@ nlopt:
 zenoh_cpp_vendor:
     ubuntu: [ros-jazzy-zenoh-cpp-vendor]
   
-zenoh_security_tools:
-    ubuntu: [ros-jazzy-zenoh-security-tools]
-  
 rmw_zenoh_cpp:
     ubuntu: [ros-jazzy-rmw-zenoh-cpp]
+  
+zenoh_security_tools:
+    ubuntu: [ros-jazzy-zenoh-security-tools]
   
