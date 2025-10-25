@@ -28,11 +28,11 @@ ov_msckf:
 octomap_msgs:
     ubuntu: [ros-jazzy-octomap-msgs]
   
-octomap_rviz_plugins:
-    ubuntu: [ros-jazzy-octomap-rviz-plugins]
-  
 octomap_ros:
     ubuntu: [ros-jazzy-octomap-ros]
+  
+octomap_rviz_plugins:
+    ubuntu: [ros-jazzy-octomap-rviz-plugins]
   
 nlopt:
     ubuntu: [ros-jazzy-nlopt]
