@@ -1,0 +1,39 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Date: Sun, 16 Nov 2025 00:55:29 +0000
+Label: unstable
+Origin: ctu-mrs
+MD5Sum:
+ 14b14968217b295389c75d099824fa09           115232 Packages
+ 4e604edb23b810376c3a062cc188217e            21670 Packages.gz
+ 43482f0dff5b8c329fd1430b7f35169a               70 Release
+SHA1:
+ 740ae10ef7bb93055cc2106b11e0a95bf9cf6cbd           115232 Packages
+ ea34d895337cfc61b3844b4f40a90aeb694a1114            21670 Packages.gz
+ 39c8fbff9880ea7edd055f49989775aab1a70bb1               70 Release
+SHA256:
+ 7849aceaba953181f71130a16b0b21cf22269f02c2487d2ca861e33ca68fa745           115232 Packages
+ 3efb2cf50f86af34409102ae8cedc3152c6c30d1d70f9bebaa44765ea537465d            21670 Packages.gz
+ d7b3458ad3df56a90e0527dfe559df6ce19bf4c1e20c1aebaf9ccb0fcc479663               70 Release
+SHA512:
+ a3fe2b60777b37c363eb4d18d9807d966c6ae979cff52ff36b038bdcb16c4d9f5ab7730625c6a994f976f362783bfe6c33eb197d91e478eca6d776b4bb0435b6           115232 Packages
+ 9291f76028f4a19cfef2cbbffae1aba448b323d11161ee638b7cf769058c164ea05fcab18f3f96c70cd92d38e58a30038db936eca01401de8a08092815426a3d            21670 Packages.gz
+ 7afea2a1ba7ab9b44e41a61bb6ff5b1cad7ef7b9454a59124f45367866a87672069df877eca653eafa5b51a368066971666b7d1c8f6d603dec9e9425fc3dbbdc               70 Release
+-----BEGIN PGP SIGNATURE-----
+
+iQJLBAEBCgA1FiEEb03deYxGy/GR9vy/sp02ABwZjREFAmkZIQEXHHRvbWFzLmJh
+Y2FAZmVsLmN2dXQuY3oACgkQsp02ABwZjRHodQ/9EnzpLWCQ9Q/WOE1a1m2OJIuN
+c7Ja0MXYZi4DOoaX2ZoINKjpBv15P1bRmVImCjdcw0L85ujuzdZvIahlrmXJUx6r
+70YwT4cb/NLRn6hi3K2J3WRiIV0aE/Wjjn+2x1dE7itZSnLS5dJPTJsu5PNqr79R
+GHZ+fzkhVbh7UHUnmUfVPfekjREMwP6SuksbVMi2ZqZ4iRl6amw+n/VAj4hc84nR
+ubKe9FWh8/ZBKmJlI3t8FJ2nmiZOq+ONSru222NsqYIKbRwHQZq7aVsbkgDGgNgf
+qpVuMmZRUtbjnsVBqqB6CKbbygx8+ruYxVsvQKpVzg8dzHe/0MbfjrcCdETfHFzo
+X1zkGGGbKZRGosWRG48PeYdPQNR6jpewyU92dQCYkktfVUWq90culmoe8+PdeTlC
+y+GYNzloeZRe0cYqOQJZeTsXRuXmPdqdXZCZyi9qdbEtqBd92narkiKMmlO2G1U4
+fshPfehWdUINFEKs3piAJLCBUl65lpsGcjvTHAa3RCfSrMJFWT7BEGpF/O3ZE9GQ
+kaCre/X/freaGrIj4X+tdtBJNPKokP3DG2EwmoBGF3JNYJLNfME9v3yR2xRjPlpG
+/ZLSsBTW5DRI8WjMYAuc/g3s0lC+JNuaSrIGPNtxbG3hzuoewhDrKIvLjl3lJY67
+9XuchVQn7cLooddvBNQ=
+=YWmc
+-----END PGP SIGNATURE-----
