@@ -4,11 +4,11 @@ ouster_sensor_msgs:
 ouster_ros:
     ubuntu: [ros-jazzy-ouster-ros]
   
-ov_data:
-    ubuntu: [ros-jazzy-ov-data]
-  
 ov_core:
     ubuntu: [ros-jazzy-ov-core]
+  
+ov_data:
+    ubuntu: [ros-jazzy-ov-data]
   
 ov_init:
     ubuntu: [ros-jazzy-ov-init]
@@ -25,11 +25,11 @@ mrs_realsense:
 octomap_msgs:
     ubuntu: [ros-jazzy-octomap-msgs]
   
-octomap_rviz_plugins:
-    ubuntu: [ros-jazzy-octomap-rviz-plugins]
-  
 octomap_ros:
     ubuntu: [ros-jazzy-octomap-ros]
+  
+octomap_rviz_plugins:
+    ubuntu: [ros-jazzy-octomap-rviz-plugins]
   
 bluefox2:
     ubuntu: [ros-jazzy-bluefox2]
