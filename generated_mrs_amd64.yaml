@@ -34,11 +34,11 @@ mrs_vins_imu_filter:
 flame_ros:
     ubuntu: [ros-jazzy-flame-ros]
   
-example_edge_detector:
-    ubuntu: [ros-jazzy-example-edge-detector]
-  
 example_blob_detector:
     ubuntu: [ros-jazzy-example-blob-detector]
+  
+example_edge_detector:
+    ubuntu: [ros-jazzy-example-edge-detector]
   
 mrs_uav_status:
     ubuntu: [ros-jazzy-mrs-uav-status]
@@ -94,26 +94,26 @@ mrs_uav_gazebo_simulator:
 mrs_open_vins_estimator_plugin:
     ubuntu: [ros-jazzy-mrs-open-vins-estimator-plugin]
   
-example_controller_plugin:
-    ubuntu: [ros-jazzy-example-controller-plugin]
-  
-example_waypoint_flier_native:
-    ubuntu: [ros-jazzy-example-waypoint-flier-native]
-  
-example_plugin_manager:
-    ubuntu: [ros-jazzy-example-plugin-manager]
+example_sweeping_generator:
+    ubuntu: [ros-jazzy-example-sweeping-generator]
   
 example_estimator_plugin:
     ubuntu: [ros-jazzy-example-estimator-plugin]
   
-example_waypoint_flier:
-    ubuntu: [ros-jazzy-example-waypoint-flier]
+example_plugin_manager:
+    ubuntu: [ros-jazzy-example-plugin-manager]
   
-example_sweeping_generator:
-    ubuntu: [ros-jazzy-example-sweeping-generator]
+example_controller_plugin:
+    ubuntu: [ros-jazzy-example-controller-plugin]
   
 example_tracker_plugin:
     ubuntu: [ros-jazzy-example-tracker-plugin]
+  
+example_waypoint_flier:
+    ubuntu: [ros-jazzy-example-waypoint-flier]
+  
+example_waypoint_flier_native:
+    ubuntu: [ros-jazzy-example-waypoint-flier-native]
   
 example_plugins:
     ubuntu: [ros-jazzy-example-plugins]
