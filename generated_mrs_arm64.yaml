@@ -100,23 +100,23 @@ mrs_uav_core:
 example_estimator_plugin:
     ubuntu: [ros-jazzy-example-estimator-plugin]
   
-example_waypoint_flier:
-    ubuntu: [ros-jazzy-example-waypoint-flier]
-  
 example_plugin_manager:
     ubuntu: [ros-jazzy-example-plugin-manager]
   
+example_waypoint_flier:
+    ubuntu: [ros-jazzy-example-waypoint-flier]
+  
 example_waypoint_flier_native:
     ubuntu: [ros-jazzy-example-waypoint-flier-native]
+  
+example_tracker_plugin:
+    ubuntu: [ros-jazzy-example-tracker-plugin]
   
 example_controller_plugin:
     ubuntu: [ros-jazzy-example-controller-plugin]
   
 example_sweeping_generator:
     ubuntu: [ros-jazzy-example-sweeping-generator]
-  
-example_tracker_plugin:
-    ubuntu: [ros-jazzy-example-tracker-plugin]
   
 example_plugins:
     ubuntu: [ros-jazzy-example-plugins]
