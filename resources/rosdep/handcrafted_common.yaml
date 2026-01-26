@@ -29,6 +29,10 @@ libcamera_ros:
 mrs_subt_planning_lib:
   ubuntu: [ros-jazzy-mrs-subt-planning-lib]
 
+# hack for octomap?
+liboctomap:
+  ubuntu: [liboctomap-dev]
+
 # other dependencies
 python3-jinja2:
   ubuntu: [python3-jinja2]
