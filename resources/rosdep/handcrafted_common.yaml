@@ -29,6 +29,10 @@ libcamera_ros:
 mrs_subt_planning_lib:
   ubuntu: [ros-jazzy-mrs-subt-planning-lib]
 
+# glslang-tools: Provides glslangValidator to validate and compile GLSL shaders for GPU acceleration.
+glslang-tools:
+  ubuntu: [glslang-tools]
+
 # hack for octomap?
 liboctomap:
   ubuntu: [liboctomap-dev]
