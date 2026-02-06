@@ -4,6 +4,10 @@
 #   ubuntu: [apt dependencies]
 #
 
+# TODO remove after added to pipeline
+mrs_cmake:
+  ubuntu: [ros-jazzy-mrs-cmake]
+
 # px4 is build using a custom script outside of the bloom pipeline
 mrs-uav-shell-additions:
   ubuntu: [mrs-uav-shell-additions]
