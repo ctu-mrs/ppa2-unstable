@@ -1,0 +1,39 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Date: Sun, 15 Feb 2026 13:13:43 +0000
+Label: unstable
+Origin: ctu-mrs
+MD5Sum:
+ 5c31c456ddc2e1cc1f52beb04c9c6dd5           135396 Packages
+ 266b5aaf1fd2d1cab9bdfcb85c14e45c            25480 Packages.gz
+ dbded08972234dcbfed45c53acc68dc4               70 Release
+SHA1:
+ d1e94c2041fcaa096312d8b0bc4f3e9a0df0ffde           135396 Packages
+ 8c325a5d7f0cb49b39dab5fceeb6bb452f252696            25480 Packages.gz
+ 7ff2720b774aa88be37114fd19ec2981320300aa               70 Release
+SHA256:
+ ed244eb184149c5848fb41a3d3e49f5b5c59f153a6f2756cca3547a48bee08bd           135396 Packages
+ d6c28706ece271049b7fa16c0754dee604e5b82213326735d2789b2c1461ac92            25480 Packages.gz
+ 3c330217010dbc6bde482630589e3cbbbc1e49640f51b98277fbc846d9ddf16b               70 Release
+SHA512:
+ a4af54ec217d51f2345c65f59d51ebd4066eb30674d33b277775366ace88efe33f021c75dcd489a447dc97746265aaef60301d2ec26414ce09dc6caaf892ab2c           135396 Packages
+ 625bb1bc8ea42e16ecf1608be27899b6b45e5cb0dd5676345cdcdac344fd6afafac946df146ee8caee177fc055911d9d16dd98fb65a0d0724c5c56746639c9bb            25480 Packages.gz
+ f40f9dbe6db822856a602d28d604699fcaeae44721d3d4b5682e6191c5f23ce5d36bd30efa1014c51bc6cf677df6d814626a4115fd1e849ebba0a8800142cddc               70 Release
+-----BEGIN PGP SIGNATURE-----
+
+iQJLBAEBCgA1FiEEb03deYxGy/GR9vy/sp02ABwZjREFAmmRxocXHHRvbWFzLmJh
+Y2FAZmVsLmN2dXQuY3oACgkQsp02ABwZjREObg//b4QP6SancoZYN3TxAEiJQlRP
+TXwCHdFs5S6VSkDEdWybg9zpQ5G1MXlCu7+hxYgwrLH8MkvFt3vm9dsKR79hRehy
+5fTuZYDlUwPUHz43nly29bT53kLHVaGWUIGrneqi8k0MzCdfO8pwiL5oHAJ8CnzT
+fzCZ7qXo26zaOYF1Ab6+dHo8rohNDfge9A9O2P9y3Qbfx5laKLiKLRgBc6BRM+yY
+7FF43i4ikaHZixodOfrDd1EY43Lgj4TvRa0S095ENKwhSm4y6gAVrwYncvt8nVqT
+bMR9p5AeekDawyB1BVG6JV68ik2x0EDbHk+MTLUDMY/WZQufZUJc37IiyTOQerSu
+51sTXKcAxNPzuxnQdgSMStOSm5J5/oQbArxzIfPN6fF8LgGsJ69r3QOBcCVtiX4D
+dIGXoss+5z0xbOJkd38dESph37MEKmI1YuxdH2iT4kXR9lXdJxyLUyfcCoNf8iAx
+giqNPCAPMQHSR39nAZ53gL1eIAXC8xfPWClC28JEIoSfbRse96glckSzDmsWDDP2
+aI74p4/yPBErV0o01sIUUq+gVTdQFDDF2ss7fyjfNi9h7kyy0kFw9PsnNMreHq0Q
+XqZsOBIo2kcjTyKvfbsFtuvlJU02uTzk0ihSeZQc0y5lafIMdZYIhEJGlqeYsLWs
+JeaOt8AdWwiOjLPHWdg=
+=DmSQ
+-----END PGP SIGNATURE-----
