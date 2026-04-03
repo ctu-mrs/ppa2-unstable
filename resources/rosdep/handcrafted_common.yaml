@@ -42,7 +42,7 @@ liboctomap:
   ubuntu: [liboctomap-dev]
 
 # for mrs_uav_bluetooth
-mrs_libsdbus_c++:
+mrs-libsdbus-c++:
   ubuntu: [mrs-libsdbus-c++]
 
 # other dependencies
