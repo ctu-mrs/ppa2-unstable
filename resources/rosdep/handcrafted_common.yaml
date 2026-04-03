@@ -41,6 +41,10 @@ glslang-tools:
 liboctomap:
   ubuntu: [liboctomap-dev]
 
+# for mrs_uav_bluetooth
+mrs_libsdbus_c++:
+  ubuntu: [mrs-libsdbus-c++]
+
 # other dependencies
 python3-jinja2:
   ubuntu: [python3-jinja2]
