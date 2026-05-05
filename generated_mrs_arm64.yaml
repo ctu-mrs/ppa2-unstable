@@ -40,11 +40,11 @@ flame_ros:
 mrs_pcl_tools:
     ubuntu: [ros-jazzy-mrs-pcl-tools]
   
-mrs_tf_connector:
-    ubuntu: [ros-jazzy-mrs-tf-connector]
-  
 mrs_odometry_republisher:
     ubuntu: [ros-jazzy-mrs-odometry-republisher]
+  
+mrs_tf_connector:
+    ubuntu: [ros-jazzy-mrs-tf-connector]
   
 mrs_tf_mirror:
     ubuntu: [ros-jazzy-mrs-tf-mirror]
@@ -136,26 +136,26 @@ mrs_uav_controllers:
 mrs_uav_flightforge_simulator:
     ubuntu: [ros-jazzy-mrs-uav-flightforge-simulator]
   
+example_controller_plugin:
+    ubuntu: [ros-jazzy-example-controller-plugin]
+  
 example_estimator_plugin:
     ubuntu: [ros-jazzy-example-estimator-plugin]
-  
-example_tracker_plugin:
-    ubuntu: [ros-jazzy-example-tracker-plugin]
-  
-example_waypoint_flier:
-    ubuntu: [ros-jazzy-example-waypoint-flier]
   
 example_waypoint_flier_native:
     ubuntu: [ros-jazzy-example-waypoint-flier-native]
   
-example_controller_plugin:
-    ubuntu: [ros-jazzy-example-controller-plugin]
+example_plugin_manager:
+    ubuntu: [ros-jazzy-example-plugin-manager]
+  
+example_tracker_plugin:
+    ubuntu: [ros-jazzy-example-tracker-plugin]
   
 example_sweeping_generator:
     ubuntu: [ros-jazzy-example-sweeping-generator]
   
-example_plugin_manager:
-    ubuntu: [ros-jazzy-example-plugin-manager]
+example_waypoint_flier:
+    ubuntu: [ros-jazzy-example-waypoint-flier]
   
 example_plugins:
     ubuntu: [ros-jazzy-example-plugins]
@@ -175,9 +175,9 @@ mrs_open_vins_core:
 mrs_point_lio_core:
     ubuntu: [ros-jazzy-mrs-point-lio-core]
   
-mrs_uav_system:
-    ubuntu: [ros-jazzy-mrs-uav-system]
-  
 mrs_uav_system_full:
     ubuntu: [ros-jazzy-mrs-uav-system-full]
+  
+mrs_uav_system:
+    ubuntu: [ros-jazzy-mrs-uav-system]
   
