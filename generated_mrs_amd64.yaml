@@ -67,14 +67,14 @@ mrs_subt_planning_lib:
 mrs_bumper:
     ubuntu: [ros-jazzy-mrs-bumper]
   
-mrs_tf_mirror:
-    ubuntu: [ros-jazzy-mrs-tf-mirror]
-  
 mrs_tf_connector:
     ubuntu: [ros-jazzy-mrs-tf-connector]
   
 mrs_odometry_republisher:
     ubuntu: [ros-jazzy-mrs-odometry-republisher]
+  
+mrs_tf_mirror:
+    ubuntu: [ros-jazzy-mrs-tf-mirror]
   
 mrs_tf_reconfigure:
     ubuntu: [ros-jazzy-mrs-tf-reconfigure]
@@ -139,11 +139,11 @@ mrs_uav_state_estimators:
 example_plugin_manager:
     ubuntu: [ros-jazzy-example-plugin-manager]
   
-example_controller_plugin:
-    ubuntu: [ros-jazzy-example-controller-plugin]
+example_waypoint_flier_native:
+    ubuntu: [ros-jazzy-example-waypoint-flier-native]
   
-example_estimator_plugin:
-    ubuntu: [ros-jazzy-example-estimator-plugin]
+example_sweeping_generator:
+    ubuntu: [ros-jazzy-example-sweeping-generator]
   
 example_tracker_plugin:
     ubuntu: [ros-jazzy-example-tracker-plugin]
@@ -151,11 +151,11 @@ example_tracker_plugin:
 example_waypoint_flier:
     ubuntu: [ros-jazzy-example-waypoint-flier]
   
-example_waypoint_flier_native:
-    ubuntu: [ros-jazzy-example-waypoint-flier-native]
+example_estimator_plugin:
+    ubuntu: [ros-jazzy-example-estimator-plugin]
   
-example_sweeping_generator:
-    ubuntu: [ros-jazzy-example-sweeping-generator]
+example_controller_plugin:
+    ubuntu: [ros-jazzy-example-controller-plugin]
   
 example_plugins:
     ubuntu: [ros-jazzy-example-plugins]
