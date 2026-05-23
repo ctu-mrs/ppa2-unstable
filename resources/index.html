@@ -75,9 +75,18 @@
 		}
 
 		.shell {
-			width: min(100vw - 18px, 1840px);
-			margin: 0 auto;
+			width: 100%;
 			padding: 16px 0 24px;
+		}
+
+		.hero-shell {
+			width: min(100vw - 18px, 1500px);
+			margin: 0 auto;
+		}
+
+		.workspace-shell {
+			width: min(100vw - 18px, 2200px);
+			margin: 16px auto 0;
 		}
 
 		.hero {
@@ -208,7 +217,7 @@
 
 		.stats {
 			display: grid;
-			grid-template-columns: repeat(5, minmax(0, 1fr));
+			grid-template-columns: repeat(4, minmax(0, 1fr));
 			gap: 10px;
 		}
 
@@ -233,13 +242,6 @@
 			letter-spacing: -0.03em;
 		}
 
-		.stat-meta {
-			margin-top: 7px;
-			color: var(--muted);
-			font-size: 0.9rem;
-			line-height: 1.45;
-		}
-
 		.controls {
 			display: grid;
 			gap: 10px;
@@ -252,8 +254,9 @@
 
 		.toolbar-fields {
 			display: grid;
-			grid-template-columns: minmax(220px, 2fr) repeat(3, minmax(165px, 1fr));
+			grid-template-columns: minmax(220px, 2fr) repeat(3, minmax(160px, 1fr)) auto auto;
 			gap: 12px;
+			align-items: center;
 		}
 
 		.toolbar-actions {
@@ -349,15 +352,10 @@
 		}
 
 		.layout {
-			margin-top: 16px;
 			display: grid;
-			grid-template-columns: minmax(0, 1fr);
+			grid-template-columns: minmax(0, 1.75fr) minmax(320px, 0.9fr);
 			gap: 14px;
 			align-items: start;
-		}
-
-		.layout.has-selection {
-			grid-template-columns: minmax(0, minmax(720px, 1.75fr)) minmax(360px, 0.95fr);
 		}
 
 		.list-panel,
@@ -384,10 +382,6 @@
 			max-height: calc(100vh - 24px);
 			display: grid;
 			grid-template-rows: auto minmax(0, 1fr);
-		}
-
-		.detail-panel.is-hidden {
-			display: none;
 		}
 
 		.detail-panel .panel-body {
@@ -644,26 +638,17 @@
 		}
 
 		@media (max-width: 1360px) {
-			.stats {
-				grid-template-columns: repeat(3, minmax(0, 1fr));
-			}
-
-			.layout.has-selection {
-				grid-template-columns: minmax(0, 1.45fr) minmax(340px, 0.95fr);
+			.layout {
+				grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.9fr);
 			}
 
 			.toolbar-fields {
-				grid-template-columns: repeat(2, minmax(0, 1fr));
-			}
-
-			.toolbar-actions {
-				justify-content: flex-start;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
 			}
 		}
 
-		@media (max-width: 1140px) {
-			.layout,
-			.layout.has-selection {
+		@media (max-width: 900px) {
+			.layout {
 				grid-template-columns: 1fr;
 			}
 
@@ -687,9 +672,13 @@
 
 		@media (max-width: 760px) {
 			.shell {
-				width: min(100vw - 12px, 1580px);
 				padding-top: 12px;
 				padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+			}
+
+			.hero-shell,
+			.workspace-shell {
+				width: min(100vw - 12px, 1580px);
 			}
 
 			.hero,
@@ -716,10 +705,6 @@
 			.toolbar-fields,
 			.toolbar-actions {
 				grid-template-columns: 1fr;
-			}
-
-			.toolbar-actions {
-				display: grid;
 			}
 
 			.view-tabs {
@@ -779,78 +764,70 @@
 </head>
 <body>
 	<div class="shell">
-		<section class="hero">
-			<div class="hero-top">
-				<div>
-					<div class="eyebrow">APT Repository Explorer</div>
-					<h1 id="hero-title">PPA Repository Explorer</h1>
-					<p id="hero-summary">
-						This page derives the backing GitHub repository from the current URL, loads the APT metadata from the current directory,
-						and reconstructs deployment history from the Pages branch automatically.
-					</p>
+		<div class="hero-shell">
+			<section class="hero">
+				<div class="hero-top">
+					<div>
+						<div class="eyebrow">APT Repository Explorer</div>
+						<h1 id="hero-title">PPA Repository Explorer</h1>
+						<p id="hero-summary">
+							This page derives the backing GitHub repository from the current URL, loads the APT metadata from the current directory,
+							and reconstructs deployment history from the Pages branch automatically.
+						</p>
+					</div>
+					<div class="repo-links" id="repo-links">
+						<span class="tag">Resolving repository context…</span>
+					</div>
 				</div>
-				<div class="repo-links" id="repo-links">
-					<span class="tag">Resolving repository context…</span>
-				</div>
-			</div>
 
-			<div class="stats">
-				<div class="stat">
-					<div class="stat-label">Packages</div>
-					<div class="stat-value" id="stat-packages">-</div>
-					<div class="stat-meta">Unique package names discovered in the APT history</div>
+				<div class="stats">
+					<div class="stat">
+						<div class="stat-label">Packages</div>
+						<div class="stat-value" id="stat-packages">-</div>
+					</div>
+					<div class="stat">
+						<div class="stat-label">Snapshots</div>
+						<div class="stat-value" id="stat-snapshots">-</div>
+					</div>
+					<div class="stat">
+						<div class="stat-label">Architectures</div>
+						<div class="stat-value" id="stat-architectures">-</div>
+					</div>
+					<div class="stat">
+						<div class="stat-label">Latest Deploy</div>
+						<div class="stat-value" id="stat-latest">-</div>
+					</div>
 				</div>
-				<div class="stat">
-					<div class="stat-label">Snapshots</div>
-					<div class="stat-value" id="stat-snapshots">-</div>
-					<div class="stat-meta">Pages deploy commits parsed into package history</div>
-				</div>
-				<div class="stat">
-					<div class="stat-label">Architectures</div>
-					<div class="stat-value" id="stat-architectures">-</div>
-					<div class="stat-meta">Release metadata merged with package entries</div>
-				</div>
-				<div class="stat">
-					<div class="stat-label">Latest Deploy</div>
-					<div class="stat-value" id="stat-latest">-</div>
-					<div class="stat-meta" id="stat-latest-meta">Waiting for data</div>
-				</div>
-				<div class="stat">
-					<div class="stat-label">URL State</div>
-					<div class="stat-value" id="stat-route">Table</div>
-					<div class="stat-meta" id="stat-route-meta">Minimal params only: pkg, version, tab, q, arch, sort</div>
-				</div>
-			</div>
 
-			<div class="controls">
-				<div class="toolbar-fields">
-					<input id="search" class="field" type="search" placeholder="Search package, description, maintainer, dependency or metadata">
-					<select id="arch-filter" class="select">
-						<option value="all">All architectures</option>
-					</select>
-					<select id="sort-filter" class="select">
-						<option value="latest">Sort by latest deploy</option>
-						<option value="name">Sort by package name</option>
-						<option value="versions">Sort by version count</option>
-						<option value="history">Sort by deployment count</option>
-					</select>
-					<select id="version-filter" class="select">
-						<option value="latest">Selected package: newest version</option>
-					</select>
+				<div class="controls">
+					<div class="toolbar-fields">
+						<input id="search" class="field" type="search" placeholder="Search package, description, maintainer, dependency or metadata">
+						<select id="arch-filter" class="select">
+							<option value="all">All architectures</option>
+						</select>
+						<select id="sort-filter" class="select">
+							<option value="latest">Sort by latest deploy</option>
+							<option value="name">Sort by package name</option>
+							<option value="versions">Sort by version count</option>
+							<option value="history">Sort by deployment count</option>
+						</select>
+						<select id="version-filter" class="select">
+							<option value="latest">Selected package: newest version</option>
+						</select>
+						<button id="load-history" class="button button-secondary" type="button">Load full history</button>
+						<button id="refresh" class="button" type="button">Refresh data</button>
+					</div>
 				</div>
-				<div class="toolbar-actions">
-					<button id="load-history" class="button button-secondary" type="button">Load full history</button>
-					<button id="refresh" class="button" type="button">Refresh data</button>
+
+				<div class="status-bar">
+					<span id="status-line">Loading repository metadata…</span>
+					<span id="rate-line"></span>
 				</div>
-			</div>
+			</section>
+		</div>
 
-			<div class="status-bar">
-				<span id="status-line">Loading repository metadata…</span>
-				<span id="rate-line"></span>
-			</div>
-		</section>
-
-		<div class="layout" id="workspace-layout">
+		<div class="workspace-shell">
+			<div class="layout" id="workspace-layout">
 			<section class="panel list-panel">
 				<div class="panel-head">
 					<div>
@@ -868,7 +845,7 @@
 				</div>
 			</section>
 
-			<section class="panel detail-panel is-hidden" id="detail-panel">
+			<section class="panel detail-panel" id="detail-panel">
 				<div class="panel-head">
 					<div>
 						<h3>Package Detail</h3>
@@ -884,6 +861,7 @@
 					<div class="empty">Package details will appear here after the first snapshot is loaded.</div>
 				</div>
 			</section>
+			</div>
 		</div>
 	</div>
 
@@ -937,9 +915,6 @@
 			statSnapshots: document.getElementById("stat-snapshots"),
 			statArchitectures: document.getElementById("stat-architectures"),
 			statLatest: document.getElementById("stat-latest"),
-			statLatestMeta: document.getElementById("stat-latest-meta"),
-			statRoute: document.getElementById("stat-route"),
-			statRouteMeta: document.getElementById("stat-route-meta"),
 			tabButtons: Array.from(document.querySelectorAll(".tab-button"))
 		};
 
@@ -2001,17 +1976,10 @@
 		function renderDetail() {
 			const pkg = getSelectedPackage();
 			if (!pkg) {
-				elements.layout.classList.remove("has-selection");
-				elements.detailPanel.classList.add("is-hidden");
-				elements.detailPanel.setAttribute("aria-hidden", "true");
 				elements.detailCaption.textContent = "No package selected";
 				elements.detailRoot.innerHTML = '<div class="empty">The table stays unselected by default. Select any package row, or open <code>?pkg=package-name</code>. When only the package is provided, the newest version is shown automatically.</div>';
 				return;
 			}
-
-			elements.layout.classList.add("has-selection");
-			elements.detailPanel.classList.remove("is-hidden");
-			elements.detailPanel.setAttribute("aria-hidden", "false");
 
 			const versionEntry = getSelectedVersionEntry(pkg);
 			const current = versionEntry?.entries[0] || pkg.latestEntry;
@@ -2083,15 +2051,6 @@
 
 			const latestSnapshot = state.snapshots[0];
 			elements.statLatest.textContent = latestSnapshot ? formatDate(latestSnapshot.date, false) : "-";
-			elements.statLatestMeta.textContent = latestSnapshot
-				? `${state.repo.pagesBranch} ${latestSnapshot.sha.slice(0, 7)}${latestSnapshot.sourceDebsSha ? ` from debs ${latestSnapshot.sourceDebsSha.slice(0, 7)}` : ""}`
-				: "No history loaded";
-
-			const pkg = getSelectedPackage();
-			elements.statRoute.textContent = pkg ? "Detail" : "Table";
-			elements.statRouteMeta.textContent = pkg
-				? `${pkg.name}${state.selectedVersion !== "latest" ? ` · ${state.selectedVersion}` : " · newest version"}${state.activeTab !== "overview" ? ` · ${state.activeTab}` : ""}`
-				: "Default URL has no pkg param";
 
 			elements.loadHistory.textContent = state.historyLoaded
 				? "Reload full history"
