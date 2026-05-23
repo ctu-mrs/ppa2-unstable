@@ -50,6 +50,16 @@
 		}
 
 		button,
+		button *,
+		a,
+		[role="button"],
+		[data-package-link],
+		[data-dependency-link],
+		[data-version-link] {
+			cursor: pointer;
+		}
+
+		button,
 		input,
 		select {
 			font: inherit;
@@ -65,15 +75,15 @@
 		}
 
 		.shell {
-			width: min(1500px, calc(100vw - 28px));
+			width: min(100vw - 18px, 1840px);
 			margin: 0 auto;
-			padding: 22px 0 34px;
+			padding: 16px 0 24px;
 		}
 
 		.hero {
 			display: grid;
-			gap: 16px;
-			padding: 24px;
+			gap: 14px;
+			padding: 20px 22px;
 			border: 1px solid var(--line);
 			border-radius: var(--radius-xl);
 			background: linear-gradient(135deg, rgba(255, 253, 250, 0.95), rgba(244, 239, 230, 0.86));
@@ -237,6 +247,7 @@
 			border: 1px solid var(--line);
 			border-radius: var(--radius-lg);
 			background: rgba(255, 255, 255, 0.64);
+			align-items: start;
 		}
 
 		.toolbar-fields {
@@ -246,8 +257,10 @@
 		}
 
 		.toolbar-actions {
-			display: grid;
-			grid-template-columns: repeat(2, minmax(180px, 1fr));
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-end;
+			align-items: center;
 			gap: 12px;
 		}
 
@@ -278,13 +291,48 @@
 			white-space: nowrap;
 		}
 
+		.toolbar-actions .button {
+			width: auto;
+			min-width: 0;
+			padding: 11px 14px;
+			min-height: 42px;
+			flex: 0 0 auto;
+		}
+
 		.view-tabs {
-			justify-content: flex-end;
+			justify-content: flex-start;
+			align-items: center;
 		}
 
 		.button.button-secondary {
 			background: rgba(255, 255, 255, 0.85);
 			font-weight: 600;
+		}
+
+		.table-tools {
+			justify-content: flex-start;
+			align-items: center;
+		}
+
+		.table-tools .pill-button,
+		.view-tabs .tab-button,
+		.history-links .history-link,
+		.detail-actions .action-link,
+		.dep-list .dep-link,
+		.dep-list .history-link,
+		.row-link {
+			padding: 9px 12px;
+			min-height: 40px;
+		}
+
+		.row-link,
+		.history-link,
+		.action-link,
+		.dep-link,
+		.pill-button,
+		.tab-button {
+			width: auto;
+			max-width: 100%;
 		}
 
 		.status-bar {
@@ -303,9 +351,48 @@
 		.layout {
 			margin-top: 16px;
 			display: grid;
-			grid-template-columns: minmax(0, 1.42fr) minmax(380px, 1fr);
+			grid-template-columns: minmax(0, 1fr);
 			gap: 14px;
 			align-items: start;
+		}
+
+		.layout.has-selection {
+			grid-template-columns: minmax(0, minmax(720px, 1.75fr)) minmax(360px, 0.95fr);
+		}
+
+		.list-panel,
+		.detail-panel {
+			min-width: 0;
+		}
+
+		.list-panel {
+			display: grid;
+			grid-template-rows: auto minmax(0, 1fr);
+			height: calc(100vh - 42px);
+		}
+
+		.list-panel .panel-body {
+			display: grid;
+			grid-template-rows: auto minmax(0, 1fr);
+			gap: 12px;
+			min-height: 0;
+		}
+
+		.detail-panel {
+			position: sticky;
+			top: 12px;
+			max-height: calc(100vh - 24px);
+			display: grid;
+			grid-template-rows: auto minmax(0, 1fr);
+		}
+
+		.detail-panel.is-hidden {
+			display: none;
+		}
+
+		.detail-panel .panel-body {
+			overflow: auto;
+			min-height: 0;
 		}
 
 		.panel {
@@ -349,12 +436,14 @@
 			background: rgba(255, 255, 255, 0.68);
 			-webkit-overflow-scrolling: touch;
 			overflow-anchor: none;
+			min-height: 0;
+			height: 100%;
 		}
 
 		table {
 			width: 100%;
 			border-collapse: collapse;
-			min-width: 760px;
+			min-width: 980px;
 		}
 
 		thead th {
@@ -379,6 +468,7 @@
 
 		tbody tr {
 			transition: background 120ms ease;
+			cursor: pointer;
 		}
 
 		tbody tr:hover,
@@ -418,7 +508,7 @@
 		}
 
 		.table-description {
-			max-width: 460px;
+			max-width: 420px;
 		}
 
 		.detail-hero {
@@ -558,17 +648,32 @@
 				grid-template-columns: repeat(3, minmax(0, 1fr));
 			}
 
+			.layout.has-selection {
+				grid-template-columns: minmax(0, 1.45fr) minmax(340px, 0.95fr);
+			}
+
 			.toolbar-fields {
 				grid-template-columns: repeat(2, minmax(0, 1fr));
 			}
 
 			.toolbar-actions {
-				grid-template-columns: repeat(2, minmax(0, 1fr));
+				justify-content: flex-start;
 			}
 		}
 
 		@media (max-width: 1140px) {
 			.layout,
+			.layout.has-selection {
+				grid-template-columns: 1fr;
+			}
+
+			.list-panel,
+			.detail-panel {
+				height: auto;
+				max-height: none;
+				position: static;
+			}
+
 			.detail-grid,
 			.route-grid,
 			.dependency-grid {
@@ -582,7 +687,7 @@
 
 		@media (max-width: 760px) {
 			.shell {
-				width: min(100vw - 18px, 1580px);
+				width: min(100vw - 12px, 1580px);
 				padding-top: 12px;
 				padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px));
 			}
@@ -613,11 +718,20 @@
 				grid-template-columns: 1fr;
 			}
 
+			.toolbar-actions {
+				display: grid;
+			}
+
 			.view-tabs {
 				width: 100%;
 				display: grid;
 				grid-template-columns: repeat(3, minmax(0, 1fr));
 				gap: 8px;
+			}
+
+			.panel-head {
+				flex-direction: column;
+				align-items: stretch;
 			}
 
 			.tab-button {
@@ -736,8 +850,8 @@
 			</div>
 		</section>
 
-		<div class="layout">
-			<section class="panel">
+		<div class="layout" id="workspace-layout">
+			<section class="panel list-panel">
 				<div class="panel-head">
 					<div>
 						<h2>Packages</h2>
@@ -754,7 +868,7 @@
 				</div>
 			</section>
 
-			<section class="panel">
+			<section class="panel detail-panel is-hidden" id="detail-panel">
 				<div class="panel-head">
 					<div>
 						<h3>Package Detail</h3>
@@ -799,6 +913,7 @@
 		};
 
 		const elements = {
+			layout: document.getElementById("workspace-layout"),
 			heroTitle: document.getElementById("hero-title"),
 			heroSummary: document.getElementById("hero-summary"),
 			repoLinks: document.getElementById("repo-links"),
@@ -809,6 +924,7 @@
 			loadHistory: document.getElementById("load-history"),
 			refresh: document.getElementById("refresh"),
 			listRoot: document.getElementById("list-root"),
+			detailPanel: document.getElementById("detail-panel"),
 			detailRoot: document.getElementById("detail-root"),
 			detailCaption: document.getElementById("detail-caption"),
 			statusLine: document.getElementById("status-line"),
@@ -1598,13 +1714,10 @@
 				state.selectedName = "";
 			}
 
-			if (!state.selectedName && filteredPackages.length) {
-				state.selectedName = filteredPackages[0].name;
-			}
-
 			const pkg = getSelectedPackage();
 			if (!pkg) {
 				state.selectedVersion = "latest";
+				state.activeTab = "overview";
 				return;
 			}
 
@@ -1662,7 +1775,7 @@
 				const current = pkg.currentEntries[0] || latest;
 				const isActive = selectedPackage && selectedPackage.name === pkg.name;
 				return `
-					<tr class="${isActive ? "is-active" : ""}">
+					<tr class="${isActive ? "is-active" : ""}" data-package-row="${escapeHtml(pkg.name)}" aria-selected="${isActive ? "true" : "false"}">
 						<td>
 							<div class="table-name">${escapeHtml(pkg.name)}</div>
 							<div class="table-description">${escapeHtml(latest?.description || pkg.descriptions[0] || "No description")}</div>
@@ -1675,7 +1788,7 @@
 							<div class="hint">${escapeHtml(formatRelativeDate(pkg.latestDeployedAt))}</div>
 						</td>
 						<td>${escapeHtml(current?.sourceDebsSha ? current.sourceDebsSha.slice(0, 7) : "-")}</td>
-						<td><a class="row-link" href="${escapeHtml(buildPackageUrl(pkg.name, "latest", state.activeTab))}" data-package-link="${escapeHtml(pkg.name)}">Open</a></td>
+						<td><a class="row-link" href="${escapeHtml(buildPackageUrl(pkg.name, "latest", state.activeTab))}" data-package-link="${escapeHtml(pkg.name)}">View</a></td>
 					</tr>
 				`;
 			}).join("");
@@ -1711,9 +1824,37 @@
 					event.preventDefault();
 					state.selectedName = link.dataset.packageLink || "";
 					state.selectedVersion = "latest";
+					state.activeTab = "overview";
 					updateUrlState();
 					render();
 				});
+			}
+
+			for (const row of elements.listRoot.querySelectorAll("[data-package-row]")) {
+				row.addEventListener("click", (event) => {
+					const interactiveTarget = event.target.closest("a, button, select, input");
+					if (interactiveTarget) {
+						return;
+					}
+					state.selectedName = row.dataset.packageRow || "";
+					state.selectedVersion = "latest";
+					state.activeTab = "overview";
+					updateUrlState();
+					render();
+				});
+
+				row.addEventListener("keydown", (event) => {
+					if (event.key !== "Enter" && event.key !== " ") {
+						return;
+					}
+					event.preventDefault();
+					state.selectedName = row.dataset.packageRow || "";
+					state.selectedVersion = "latest";
+					state.activeTab = "overview";
+					updateUrlState();
+					render();
+				});
+				row.tabIndex = 0;
 			}
 		}
 
@@ -1860,10 +2001,17 @@
 		function renderDetail() {
 			const pkg = getSelectedPackage();
 			if (!pkg) {
-				elements.detailCaption.textContent = "Select a package";
-				elements.detailRoot.innerHTML = '<div class="empty">Select a package in the table, or open <code>?pkg=package-name</code>. When only the package is provided, the newest version is shown automatically.</div>';
+				elements.layout.classList.remove("has-selection");
+				elements.detailPanel.classList.add("is-hidden");
+				elements.detailPanel.setAttribute("aria-hidden", "true");
+				elements.detailCaption.textContent = "No package selected";
+				elements.detailRoot.innerHTML = '<div class="empty">The table stays unselected by default. Select any package row, or open <code>?pkg=package-name</code>. When only the package is provided, the newest version is shown automatically.</div>';
 				return;
 			}
+
+			elements.layout.classList.add("has-selection");
+			elements.detailPanel.classList.remove("is-hidden");
+			elements.detailPanel.setAttribute("aria-hidden", "false");
 
 			const versionEntry = getSelectedVersionEntry(pkg);
 			const current = versionEntry?.entries[0] || pkg.latestEntry;
@@ -1943,7 +2091,7 @@
 			elements.statRoute.textContent = pkg ? "Detail" : "Table";
 			elements.statRouteMeta.textContent = pkg
 				? `${pkg.name}${state.selectedVersion !== "latest" ? ` · ${state.selectedVersion}` : " · newest version"}${state.activeTab !== "overview" ? ` · ${state.activeTab}` : ""}`
-				: "No pkg param selected";
+				: "Default URL has no pkg param";
 
 			elements.loadHistory.textContent = state.historyLoaded
 				? "Reload full history"
