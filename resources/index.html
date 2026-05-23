@@ -7,19 +7,19 @@
 	<style>
 		:root {
 			color-scheme: light;
-			--bg: #f3efe6;
-			--panel: rgba(255, 253, 249, 0.86);
-			--panel-strong: #fffdfa;
-			--panel-soft: rgba(251, 248, 241, 0.72);
-			--ink: #191714;
-			--muted: #63594c;
-			--accent: #0f766e;
-			--accent-strong: #115e59;
-			--accent-soft: rgba(15, 118, 110, 0.1);
-			--line: rgba(25, 23, 20, 0.12);
-			--line-strong: rgba(25, 23, 20, 0.2);
+			--bg: #f1efe7;
+			--panel: rgba(255, 255, 253, 0.88);
+			--panel-strong: #fffdf8;
+			--panel-soft: rgba(246, 242, 232, 0.72);
+			--ink: #161412;
+			--muted: #5f5649;
+			--accent: #0e7490;
+			--accent-strong: #0f5f75;
+			--accent-soft: rgba(14, 116, 144, 0.1);
+			--line: rgba(22, 20, 18, 0.12);
+			--line-strong: rgba(22, 20, 18, 0.2);
 			--warn: #92400e;
-			--shadow: 0 28px 70px rgba(44, 37, 27, 0.14);
+			--shadow: 0 18px 44px rgba(42, 35, 25, 0.12);
 			--radius-xl: 28px;
 			--radius-lg: 22px;
 			--radius-md: 16px;
@@ -37,12 +37,12 @@
 		body {
 			margin: 0;
 			min-height: 100vh;
-			font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+			font-family: "Segoe UI", "Aptos", "Helvetica Neue", Arial, sans-serif;
 			color: var(--ink);
 			background:
-				radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 28%),
-				radial-gradient(circle at top right, rgba(217, 119, 6, 0.14), transparent 22%),
-				linear-gradient(180deg, #f8f4ec 0%, var(--bg) 100%);
+				radial-gradient(circle at top left, rgba(14, 116, 144, 0.16), transparent 28%),
+				radial-gradient(circle at top right, rgba(217, 119, 6, 0.12), transparent 22%),
+				linear-gradient(180deg, #f8f5ec 0%, var(--bg) 100%);
 		}
 
 		a {
@@ -53,6 +53,7 @@
 		input,
 		select {
 			font: inherit;
+			touch-action: manipulation;
 		}
 
 		code {
@@ -64,20 +65,20 @@
 		}
 
 		.shell {
-			width: min(1580px, calc(100vw - 28px));
+			width: min(1500px, calc(100vw - 28px));
 			margin: 0 auto;
-			padding: 26px 0 42px;
+			padding: 22px 0 34px;
 		}
 
 		.hero {
 			display: grid;
-			gap: 20px;
-			padding: 30px;
+			gap: 16px;
+			padding: 24px;
 			border: 1px solid var(--line);
 			border-radius: var(--radius-xl);
-			background: linear-gradient(135deg, rgba(255, 253, 250, 0.95), rgba(245, 239, 229, 0.86));
+			background: linear-gradient(135deg, rgba(255, 253, 250, 0.95), rgba(244, 239, 230, 0.86));
 			box-shadow: var(--shadow);
-			backdrop-filter: blur(14px);
+			backdrop-filter: blur(10px);
 		}
 
 		.hero-top {
@@ -198,11 +199,11 @@
 		.stats {
 			display: grid;
 			grid-template-columns: repeat(5, minmax(0, 1fr));
-			gap: 14px;
+			gap: 10px;
 		}
 
 		.stat {
-			padding: 18px;
+			padding: 14px;
 			border-radius: var(--radius-lg);
 			background: var(--panel);
 			border: 1px solid var(--line);
@@ -229,9 +230,24 @@
 			line-height: 1.45;
 		}
 
-		.toolbar {
+		.controls {
 			display: grid;
-			grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr)) auto;
+			gap: 10px;
+			padding: 12px;
+			border: 1px solid var(--line);
+			border-radius: var(--radius-lg);
+			background: rgba(255, 255, 255, 0.64);
+		}
+
+		.toolbar-fields {
+			display: grid;
+			grid-template-columns: minmax(220px, 2fr) repeat(3, minmax(165px, 1fr));
+			gap: 12px;
+		}
+
+		.toolbar-actions {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(180px, 1fr));
 			gap: 12px;
 		}
 
@@ -245,6 +261,7 @@
 			border: 1px solid var(--line);
 			background: var(--panel-strong);
 			color: var(--ink);
+			min-height: 48px;
 		}
 
 		.button,
@@ -258,6 +275,16 @@
 		.pill-button {
 			font-weight: 700;
 			background: linear-gradient(135deg, rgba(15, 118, 110, 0.12), rgba(255, 255, 255, 0.92));
+			white-space: nowrap;
+		}
+
+		.view-tabs {
+			justify-content: flex-end;
+		}
+
+		.button.button-secondary {
+			background: rgba(255, 255, 255, 0.85);
+			font-weight: 600;
 		}
 
 		.status-bar {
@@ -267,13 +294,17 @@
 			flex-wrap: wrap;
 			color: var(--muted);
 			font-size: 0.92rem;
+			padding: 8px 12px;
+			border-radius: var(--radius-md);
+			background: rgba(255, 255, 255, 0.58);
+			border: 1px solid var(--line);
 		}
 
 		.layout {
-			margin-top: 22px;
+			margin-top: 16px;
 			display: grid;
-			grid-template-columns: minmax(0, 1.55fr) minmax(390px, 0.95fr);
-			gap: 18px;
+			grid-template-columns: minmax(0, 1.42fr) minmax(380px, 1fr);
+			gap: 14px;
 			align-items: start;
 		}
 
@@ -294,6 +325,10 @@
 			padding: 18px 20px;
 			border-bottom: 1px solid var(--line);
 			background: rgba(255, 255, 255, 0.58);
+			position: sticky;
+			top: 0;
+			z-index: 5;
+			backdrop-filter: blur(8px);
 		}
 
 		.panel-head h2,
@@ -312,12 +347,14 @@
 			border: 1px solid var(--line);
 			border-radius: var(--radius-lg);
 			background: rgba(255, 255, 255, 0.68);
+			-webkit-overflow-scrolling: touch;
+			overflow-anchor: none;
 		}
 
 		table {
 			width: 100%;
 			border-collapse: collapse;
-			min-width: 920px;
+			min-width: 760px;
 		}
 
 		thead th {
@@ -521,8 +558,12 @@
 				grid-template-columns: repeat(3, minmax(0, 1fr));
 			}
 
-			.toolbar {
-				grid-template-columns: repeat(3, minmax(0, 1fr));
+			.toolbar-fields {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+
+			.toolbar-actions {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
 			}
 		}
 
@@ -542,23 +583,82 @@
 		@media (max-width: 760px) {
 			.shell {
 				width: min(100vw - 18px, 1580px);
-				padding-top: 16px;
+				padding-top: 12px;
+				padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px));
 			}
 
 			.hero,
 			.panel-head,
 			.panel-body {
-				padding-left: 16px;
-				padding-right: 16px;
+				padding-left: 14px;
+				padding-right: 14px;
+			}
+
+			.hero {
+				gap: 12px;
+			}
+
+			.controls {
+				position: sticky;
+				top: 8px;
+				z-index: 16;
+				background: rgba(255, 255, 255, 0.9);
+				backdrop-filter: blur(10px);
+				box-shadow: 0 8px 24px rgba(22, 20, 18, 0.14);
 			}
 
 			.stats,
-			.toolbar {
+			.toolbar-fields,
+			.toolbar-actions {
 				grid-template-columns: 1fr;
 			}
 
+			.view-tabs {
+				width: 100%;
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 8px;
+			}
+
+			.tab-button {
+				justify-content: center;
+				padding: 12px 10px;
+				min-height: 46px;
+				border-radius: 12px;
+			}
+
+			.toolbar-actions .button,
+			.toolbar-actions .button.button-secondary,
+			.pill-button,
+			.row-link,
+			.action-link,
+			.history-link,
+			.dep-link {
+				min-height: 50px;
+				justify-content: center;
+			}
+
+			.table-tools {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 10px;
+			}
+
+			.status-bar {
+				font-size: 0.86rem;
+				padding: 8px 10px;
+			}
+
+			.stat {
+				padding: 12px;
+			}
+
+			.stat-value {
+				font-size: clamp(1.2rem, 7vw, 1.7rem);
+			}
+
 			table {
-				min-width: 760px;
+				min-width: 680px;
 			}
 		}
 	</style>
@@ -608,21 +708,26 @@
 				</div>
 			</div>
 
-			<div class="toolbar">
-				<input id="search" class="field" type="search" placeholder="Search package, description, maintainer, dependency or metadata">
-				<select id="arch-filter" class="select">
-					<option value="all">All architectures</option>
-				</select>
-				<select id="sort-filter" class="select">
-					<option value="latest">Sort by latest deploy</option>
-					<option value="name">Sort by package name</option>
-					<option value="versions">Sort by version count</option>
-					<option value="history">Sort by deployment count</option>
-				</select>
-				<select id="version-filter" class="select">
-					<option value="latest">Selected package: newest version</option>
-				</select>
-				<button id="refresh" class="button" type="button">Reload remote data</button>
+			<div class="controls">
+				<div class="toolbar-fields">
+					<input id="search" class="field" type="search" placeholder="Search package, description, maintainer, dependency or metadata">
+					<select id="arch-filter" class="select">
+						<option value="all">All architectures</option>
+					</select>
+					<select id="sort-filter" class="select">
+						<option value="latest">Sort by latest deploy</option>
+						<option value="name">Sort by package name</option>
+						<option value="versions">Sort by version count</option>
+						<option value="history">Sort by deployment count</option>
+					</select>
+					<select id="version-filter" class="select">
+						<option value="latest">Selected package: newest version</option>
+					</select>
+				</div>
+				<div class="toolbar-actions">
+					<button id="load-history" class="button button-secondary" type="button">Load full history</button>
+					<button id="refresh" class="button" type="button">Refresh data</button>
+				</div>
 			</div>
 
 			<div class="status-bar">
@@ -673,9 +778,14 @@
 			repo: null,
 			pagesInfo: null,
 			release: null,
+			releaseText: "",
+			packagesText: "",
 			currentPackages: [],
 			snapshots: [],
 			packages: [],
+			historyLoaded: false,
+			historySource: "current",
+			releaseFingerprint: "",
 			selectedName: "",
 			selectedVersion: "latest",
 			activeTab: "overview",
@@ -696,6 +806,7 @@
 			archFilter: document.getElementById("arch-filter"),
 			sortFilter: document.getElementById("sort-filter"),
 			versionFilter: document.getElementById("version-filter"),
+			loadHistory: document.getElementById("load-history"),
 			refresh: document.getElementById("refresh"),
 			listRoot: document.getElementById("list-root"),
 			detailRoot: document.getElementById("detail-root"),
@@ -774,6 +885,70 @@
 			return `https://${owner}.github.io/${repo}/`;
 		}
 
+		function hashString(text) {
+			let hash = 2166136261;
+			for (let index = 0; index < text.length; index += 1) {
+				hash ^= text.charCodeAt(index);
+				hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+			}
+			return (hash >>> 0).toString(16).padStart(8, "0");
+		}
+
+		function getReleaseFingerprint(releaseText, packagesText) {
+			const compactRelease = String(releaseText || "").replace(/\s+/g, " ").trim();
+			const compactPackages = String(packagesText || "").replace(/\s+/g, " ").trim();
+			return hashString(`${compactRelease}::${compactPackages}`);
+		}
+
+		function getHistoryCacheKey() {
+			if (!state.repo) {
+				return "";
+			}
+			return `ppa-autoindex-history-v1:${state.repo.owner}/${state.repo.repo}:${state.repo.pagesBranch}`;
+		}
+
+		function saveHistoryCache() {
+			const key = getHistoryCacheKey();
+			if (!key || !state.historyLoaded || !state.releaseFingerprint) {
+				return;
+			}
+
+			const payload = {
+				releaseFingerprint: state.releaseFingerprint,
+				savedAt: new Date().toISOString(),
+				historyLoaded: state.historyLoaded,
+				historySource: state.historySource,
+				snapshots: state.snapshots
+			};
+
+			try {
+				localStorage.setItem(key, JSON.stringify(payload));
+			} catch (error) {
+				console.warn("Unable to save history cache, likely storage quota exceeded.", error);
+			}
+		}
+
+		function loadHistoryCache() {
+			const key = getHistoryCacheKey();
+			if (!key) {
+				return null;
+			}
+			try {
+				const raw = localStorage.getItem(key);
+				if (!raw) {
+					return null;
+				}
+				const parsed = JSON.parse(raw);
+				if (!parsed || !Array.isArray(parsed.snapshots)) {
+					return null;
+				}
+				return parsed;
+			} catch (error) {
+				console.warn("Unable to read history cache.", error);
+				return null;
+			}
+		}
+
 		async function fetchJson(url) {
 			const response = await fetch(url, {
 				headers: {
@@ -821,17 +996,8 @@
 			const webBase = `https://github.com/${inferred.owner}/${inferred.repo}`;
 			const apiBase = `https://api.github.com/repos/${inferred.owner}/${inferred.repo}`;
 			const rawBase = `https://raw.githubusercontent.com/${inferred.owner}/${inferred.repo}`;
-			let pagesBranch = inferred.branchOverride || "gh-pages";
-			let pagesUrl = hostnameToPagesUrl(inferred.owner, inferred.repo);
-
-			try {
-				const pagesInfo = await fetchJson(`${apiBase}/pages`);
-				state.pagesInfo = pagesInfo;
-				pagesBranch = inferred.branchOverride || pagesInfo.source?.branch || pagesBranch;
-				pagesUrl = pagesInfo.html_url || pagesUrl;
-			} catch (error) {
-				console.warn("Could not resolve GitHub Pages metadata, using inferred defaults.", error);
-			}
+			const pagesBranch = inferred.branchOverride || "gh-pages";
+			const pagesUrl = hostnameToPagesUrl(inferred.owner, inferred.repo);
 
 			state.repo = {
 				owner: inferred.owner,
@@ -844,6 +1010,8 @@
 				branchWeb: `${webBase}/tree/${pagesBranch}`,
 				debsWeb: `${webBase}/tree/debs`
 			};
+
+			elements.rateLine.textContent = "GitHub API idle";
 		}
 
 		function renderRepoContext() {
@@ -854,11 +1022,7 @@
 			const repoLabel = `${state.repo.owner}/${state.repo.repo}`;
 			document.title = `${state.repo.repo} · PPA Repository Explorer`;
 			elements.heroTitle.textContent = state.repo.repo;
-			elements.heroSummary.innerHTML = `
-				This page inferred <code>${escapeHtml(repoLabel)}</code> from the current URL, reads the APT metadata from the current directory,
-				reconstructs deployment history from <code>${escapeHtml(state.repo.pagesBranch)}</code>, and keeps navigation editable through a small set
-				of URL parameters: <code>pkg</code>, <code>version</code>, <code>tab</code>, <code>q</code>, <code>arch</code>, and <code>sort</code>.
-			`;
+			elements.heroSummary.innerHTML = ``;
 			elements.repoLinks.innerHTML = [
 				`<a class="chip-link" href="${escapeHtml(state.repo.webBase)}" target="_blank" rel="noreferrer">repository</a>`,
 				`<a class="chip-link" href="${escapeHtml(state.repo.branchWeb)}" target="_blank" rel="noreferrer">${escapeHtml(state.repo.pagesBranch)} branch</a>`,
@@ -1039,33 +1203,81 @@
 		}
 
 		async function loadRelease() {
-			const text = await fetchText("./Release");
-			state.release = parseRelease(text);
+			state.releaseText = await fetchText("./Release");
+			state.release = parseRelease(state.releaseText);
 		}
 
 		async function loadCurrentPackages() {
-			const text = await fetchText("./Packages");
-			state.currentPackages = parseDeb822(text).map((entry) => normalizePackageEntry(entry, {
+			state.packagesText = await fetchText("./Packages");
+			state.currentPackages = parseDeb822(state.packagesText).map((entry) => normalizePackageEntry(entry, {
 				sha: "current",
 				htmlUrl: state.repo.branchWeb,
 				sourceDebsSha: "",
 				date: state.release?.Date || new Date().toISOString(),
 				author: "Current snapshot"
 			}));
+			state.releaseFingerprint = getReleaseFingerprint(state.releaseText, state.packagesText);
 		}
 
-		async function loadSnapshots() {
+		function applyCurrentOnlySnapshot() {
+			state.snapshots = [{
+				sha: "current",
+				htmlUrl: state.repo.branchWeb,
+				date: state.release?.Date || new Date().toISOString(),
+				author: "Current snapshot",
+				sourceDebsSha: "",
+				packages: state.currentPackages
+			}];
+			state.historyLoaded = false;
+			state.historySource = "current";
+		}
+
+		function applyCachedHistoryIfFresh() {
+			const cached = loadHistoryCache();
+			if (!cached || cached.releaseFingerprint !== state.releaseFingerprint) {
+				return false;
+			}
+			state.snapshots = cached.snapshots;
+			state.historyLoaded = Boolean(cached.historyLoaded);
+			state.historySource = cached.historySource || "cache";
+			return true;
+		}
+
+		async function loadSnapshotsFromApi(existingSnapshots = []) {
+			const knownShas = new Set(
+				existingSnapshots
+					.map((snapshot) => snapshot?.sha)
+					.filter((sha) => typeof sha === "string" && sha && sha !== "current")
+			);
 			const commits = [];
 			let page = 1;
+			let reachedKnownSnapshot = false;
 			while (true) {
 				const url = `${state.repo.apiBase}/commits?sha=${state.repo.pagesBranch}&per_page=100&page=${page}`;
 				const batch = await fetchJson(url);
 				if (!Array.isArray(batch) || batch.length === 0) {
 					break;
 				}
-				commits.push(...batch);
+
+				for (const commit of batch) {
+					if (knownShas.has(commit.sha)) {
+						reachedKnownSnapshot = true;
+						break;
+					}
+					commits.push(commit);
+				}
+
+				if (reachedKnownSnapshot) {
+					break;
+				}
+
 				page += 1;
 				if (batch.length < 100) {
+					break;
+				}
+
+				if (state.rateLimit && Number.isFinite(state.rateLimit.remaining) && state.rateLimit.remaining <= 2) {
+					setStatus("API quota is low. Stopping incremental history fetch early to avoid hitting limits.");
 					break;
 				}
 			}
@@ -1098,7 +1310,44 @@
 					console.warn(`Failed to load Packages for snapshot ${sha}`, error);
 				}
 			}
-			state.snapshots = snapshots;
+			if (snapshots.length > 0 || existingSnapshots.length > 0) {
+				const merged = [...snapshots, ...existingSnapshots.filter((snapshot) => snapshot?.sha !== "current")];
+				const unique = new Map();
+				for (const snapshot of merged) {
+					if (!snapshot || !snapshot.sha || unique.has(snapshot.sha)) {
+						continue;
+					}
+					unique.set(snapshot.sha, snapshot);
+				}
+				state.snapshots = Array.from(unique.values())
+					.sort((left, right) => new Date(right.date) - new Date(left.date));
+				state.historyLoaded = true;
+				state.historySource = snapshots.length ? "api" : "cache";
+				saveHistoryCache();
+			}
+		}
+
+		async function loadFullHistoryOnDemand(force = false) {
+			if (state.historyLoaded && !force) {
+				setStatus(`History already loaded (${state.snapshots.length} snapshots).`);
+				return;
+			}
+
+			elements.loadHistory.disabled = true;
+			setStatus("Loading full deployment history from GitHub API…");
+			try {
+				const cached = loadHistoryCache();
+				const existingSnapshots = Array.isArray(cached?.snapshots) ? cached.snapshots : [];
+				await loadSnapshotsFromApi(existingSnapshots);
+				buildPackageIndex();
+				render();
+				setStatus(`History available: ${state.snapshots.length} snapshots. Cache is updated and reused while Release/Packages stay unchanged.`);
+			} catch (error) {
+				console.error(error);
+				setStatus("Unable to load full history right now. Current snapshot mode is still available.");
+			} finally {
+				elements.loadHistory.disabled = false;
+			}
 		}
 
 		function buildPackageIndex() {
@@ -1573,6 +1822,10 @@
 				<a class="history-link" href="${escapeHtml(buildPackageUrl(pkg.name, entry.version, "history"))}" data-version-link="${escapeHtml(entry.version)}">${escapeHtml(entry.version)}</a>
 			`).join("");
 
+			const lazyNotice = state.historyLoaded
+				? ""
+				: `<div class="warning">You are viewing current-snapshot history only. Use <button type="button" class="pill-button" data-inline-load-history="true">Load full history</button> to fetch full deployment history on demand.</div>`;
+
 			const entries = versionEntry.entries.map((entry) => `
 				<article class="history-entry">
 					<div class="history-head">
@@ -1598,6 +1851,7 @@
 					<strong>Version History</strong>
 					<div class="control-value">Select any version to update the URL and show historical downloads. Without <code>version</code>, the newest one is shown.</div>
 				</div>
+				${lazyNotice}
 				<div class="history-links">${versionLinks}</div>
 				<div class="history-list">${entries}</div>
 			`;
@@ -1659,6 +1913,12 @@
 					render();
 				});
 			}
+
+			for (const trigger of elements.detailRoot.querySelectorAll("[data-inline-load-history]")) {
+				trigger.addEventListener("click", () => {
+					loadFullHistoryOnDemand(false);
+				});
+			}
 		}
 
 		function renderStats() {
@@ -1684,6 +1944,10 @@
 			elements.statRouteMeta.textContent = pkg
 				? `${pkg.name}${state.selectedVersion !== "latest" ? ` · ${state.selectedVersion}` : " · newest version"}${state.activeTab !== "overview" ? ` · ${state.activeTab}` : ""}`
 				: "No pkg param selected";
+
+			elements.loadHistory.textContent = state.historyLoaded
+				? "Reload full history"
+				: "Load full history";
 		}
 
 		function render() {
@@ -1735,6 +1999,10 @@
 				initialize(false);
 			});
 
+			elements.loadHistory.addEventListener("click", () => {
+				loadFullHistoryOnDemand(state.historyLoaded);
+			});
+
 			elements.clearSelection.addEventListener("click", () => {
 				state.selectedName = "";
 				state.selectedVersion = "latest";
@@ -1762,18 +2030,24 @@
 		}
 
 		async function initialize(isInitialLoad = true) {
+			elements.loadHistory.disabled = true;
 			elements.refresh.disabled = true;
 			setStatus("Resolving repository from the current URL…");
 			elements.listRoot.innerHTML = '<div class="status">Loading remote repository state…</div>';
-			elements.detailRoot.innerHTML = '<div class="status">Building package history from remote Pages snapshots…</div>';
+			elements.detailRoot.innerHTML = '<div class="status">Loading current APT snapshot and checking local history cache…</div>';
 
 			try {
 				state.repo = null;
 				state.pagesInfo = null;
 				state.release = null;
+				state.releaseText = "";
+				state.packagesText = "";
 				state.currentPackages = [];
 				state.snapshots = [];
 				state.packages = [];
+				state.historyLoaded = false;
+				state.historySource = "current";
+				state.releaseFingerprint = "";
 
 				await resolveRepoContext();
 				renderRepoContext();
@@ -1781,12 +2055,22 @@
 				setStatus(`Fetching Release and current Packages for ${state.repo.owner}/${state.repo.repo}…`);
 				await loadRelease();
 				await loadCurrentPackages();
-				await loadSnapshots();
+				applyCurrentOnlySnapshot();
+
+				const restoredFromCache = applyCachedHistoryIfFresh();
+				if (restoredFromCache) {
+					state.historySource = "cache";
+				}
+
 				buildPackageIndex();
 				render();
 
 				const pkg = getSelectedPackage();
-				setStatus(`Loaded ${state.packages.length} packages from ${state.snapshots.length} ${state.repo.pagesBranch} snapshots.${pkg ? ` Showing ${pkg.name}.` : ""}`);
+				if (restoredFromCache) {
+					setStatus(`Loaded ${state.packages.length} packages using cached history (${state.snapshots.length} snapshots). No API call needed.${pkg ? ` Showing ${pkg.name}.` : ""}`);
+				} else {
+					setStatus(`Loaded ${state.packages.length} packages from current APT snapshot. Full history is available on demand.${pkg ? ` Showing ${pkg.name}.` : ""}`);
+				}
 
 				if (isInitialLoad) {
 					updateUrlState(true);
@@ -1797,6 +2081,7 @@
 				elements.detailRoot.innerHTML = `<div class="warning">${escapeHtml(error.message || String(error))}</div>`;
 				setStatus("Loading failed.");
 			} finally {
+				elements.loadHistory.disabled = false;
 				elements.refresh.disabled = false;
 			}
 		}
