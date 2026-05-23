@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>PPA Repository Explorer</title>
+	<title>PPA Repository</title>
 	<style>
 		:root {
 			color-scheme: light;
@@ -108,6 +108,19 @@
 			flex-wrap: wrap;
 		}
 
+		.hero-intro {
+			flex: 1 1 560px;
+			min-width: 280px;
+		}
+
+		.hero-corner {
+			flex: 0 1 440px;
+			width: min(440px, 100%);
+			display: grid;
+			gap: 10px;
+			align-content: start;
+		}
+
 		.eyebrow,
 		.tag,
 		.state-pill,
@@ -161,7 +174,6 @@
 		.detail-actions,
 		.state-summary,
 		.dep-list,
-		.history-links,
 		.view-tabs,
 		.table-tools {
 			display: flex;
@@ -171,7 +183,6 @@
 
 		.chip-link,
 		.dep-link,
-		.history-link,
 		.action-link,
 		.row-link,
 		.pill-button,
@@ -190,14 +201,12 @@
 
 		.chip-link:hover,
 		.dep-link:hover,
-		.history-link:hover,
 		.action-link:hover,
 		.row-link:hover,
 		.pill-button:hover,
 		.tab-button:hover,
 		.chip-link:focus-visible,
 		.dep-link:focus-visible,
-		.history-link:focus-visible,
 		.action-link:focus-visible,
 		.row-link:focus-visible,
 		.pill-button:focus-visible,
@@ -215,31 +224,46 @@
 			font-weight: 700;
 		}
 
-		.stats {
+		.hero-metrics {
 			display: grid;
-			grid-template-columns: repeat(4, minmax(0, 1fr));
+			grid-template-columns: repeat(2, minmax(0, 1fr));
 			gap: 10px;
 		}
 
-		.stat {
-			padding: 14px;
+		.metric-card {
+			padding: 12px 14px;
 			border-radius: var(--radius-lg);
 			background: var(--panel);
 			border: 1px solid var(--line);
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 6px;
+			align-items: center;
+			box-shadow: 0 6px 16px rgba(42, 35, 25, 0.08);
 		}
 
-		.stat-label {
+		.metric-card.metric-count {
+			background: linear-gradient(140deg, rgba(236, 253, 245, 0.8), rgba(255, 255, 255, 0.92));
+		}
+
+		.metric-card.metric-time {
+			background: linear-gradient(140deg, rgba(255, 250, 245, 0.85), rgba(255, 255, 255, 0.92));
+		}
+
+		.metric-label {
 			color: var(--muted);
 			font-size: 0.8rem;
 			text-transform: uppercase;
 			letter-spacing: 0.08em;
+			margin: 0;
 		}
 
-		.stat-value {
-			margin-top: 8px;
-			font-size: clamp(1.4rem, 2.3vw, 2.2rem);
+		.metric-value {
+			margin-top: 0;
+			font-size: clamp(1.2rem, 1.8vw, 1.8rem);
 			font-weight: 800;
 			letter-spacing: -0.03em;
+			text-align: left;
 		}
 
 		.controls {
@@ -319,17 +343,14 @@
 
 		.table-tools .pill-button,
 		.view-tabs .tab-button,
-		.history-links .history-link,
 		.detail-actions .action-link,
 		.dep-list .dep-link,
-		.dep-list .history-link,
 		.row-link {
 			padding: 9px 12px;
 			min-height: 40px;
 		}
 
 		.row-link,
-		.history-link,
 		.action-link,
 		.dep-link,
 		.pill-button,
@@ -467,6 +488,18 @@
 			min-width: 980px;
 		}
 
+		.version-cell {
+			max-width: 240px;
+		}
+
+		.version-text {
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			font-weight: 700;
+		}
+
 		thead th {
 			position: sticky;
 			top: 0;
@@ -557,7 +590,6 @@
 		}
 
 		.detail-grid,
-		.route-grid,
 		.dependency-grid {
 			display: grid;
 			grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -565,9 +597,7 @@
 		}
 
 		.detail-card,
-		.route-card,
 		.dependency-block,
-		.history-entry,
 		.control-block {
 			padding: 15px;
 			border-radius: var(--radius-md);
@@ -576,7 +606,6 @@
 		}
 
 		.detail-card strong,
-		.route-card strong,
 		.dependency-block strong,
 		.control-block strong {
 			display: block;
@@ -589,8 +618,6 @@
 
 		.description,
 		.control-table-wrap,
-		.history-list,
-		.route-card,
 		.dependency-grid {
 			margin-top: 16px;
 		}
@@ -627,26 +654,6 @@
 			background: rgba(255, 253, 248, 0.92);
 		}
 
-		.history-list {
-			display: grid;
-			gap: 12px;
-		}
-
-		.history-head {
-			display: flex;
-			justify-content: space-between;
-			gap: 12px;
-			align-items: flex-start;
-			flex-wrap: wrap;
-		}
-
-		.history-title {
-			margin: 0;
-			font-size: 1.02rem;
-			font-weight: 800;
-			letter-spacing: -0.02em;
-		}
-
 		.empty,
 		.status,
 		.warning {
@@ -675,6 +682,15 @@
 		}
 
 		@media (max-width: 900px) {
+			.hero-corner {
+				width: 100%;
+				flex-basis: 100%;
+			}
+
+			.hero-metrics {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+
 			.layout,
 			.layout.has-selection {
 				grid-template-columns: 1fr;
@@ -695,13 +711,12 @@
 			}
 
 			.detail-grid,
-			.route-grid,
 			.dependency-grid {
 				grid-template-columns: 1fr;
 			}
 
-			.stats {
-				grid-template-columns: repeat(2, minmax(0, 1fr));
+			.repo-links {
+				justify-content: flex-start;
 			}
 		}
 
@@ -736,10 +751,17 @@
 				box-shadow: 0 8px 24px rgba(22, 20, 18, 0.14);
 			}
 
-			.stats,
 			.toolbar-fields,
 			.toolbar-actions {
 				grid-template-columns: 1fr;
+			}
+
+			.hero-metrics {
+				grid-template-columns: 1fr;
+			}
+
+			.version-cell {
+				max-width: 170px;
 			}
 
 			.view-tabs {
@@ -766,7 +788,6 @@
 			.pill-button,
 			.row-link,
 			.action-link,
-			.history-link,
 			.dep-link {
 				min-height: 50px;
 				justify-content: center;
@@ -783,11 +804,11 @@
 				padding: 8px 10px;
 			}
 
-			.stat {
+			.metric-card {
 				padding: 12px;
 			}
 
-			.stat-value {
+			.metric-value {
 				font-size: clamp(1.2rem, 7vw, 1.7rem);
 			}
 
@@ -802,35 +823,28 @@
 		<div class="hero-shell">
 			<section class="hero">
 				<div class="hero-top">
-					<div>
-						<div class="eyebrow">APT Repository Explorer</div>
-						<h1 id="hero-title">PPA Repository Explorer</h1>
+					<div class="hero-intro">
+						<div class="eyebrow">APT Repository</div>
+						<h1 id="hero-title">PPA Repository</h1>
 						<p id="hero-summary">
 							This page derives the backing GitHub repository from the current URL, loads the APT metadata from the current directory,
 							and reconstructs deployment history from the Pages branch automatically.
 						</p>
 					</div>
-					<div class="repo-links" id="repo-links">
-						<span class="tag">Resolving repository context…</span>
-					</div>
-				</div>
-
-				<div class="stats">
-					<div class="stat">
-						<div class="stat-label">Packages</div>
-						<div class="stat-value" id="stat-packages">-</div>
-					</div>
-					<div class="stat">
-						<div class="stat-label">Snapshots</div>
-						<div class="stat-value" id="stat-snapshots">-</div>
-					</div>
-					<div class="stat">
-						<div class="stat-label">Architectures</div>
-						<div class="stat-value" id="stat-architectures">-</div>
-					</div>
-					<div class="stat">
-						<div class="stat-label">Latest Deploy</div>
-						<div class="stat-value" id="stat-latest">-</div>
+					<div class="hero-corner">
+						<div class="repo-links" id="repo-links">
+							<span class="tag">Resolving repository context…</span>
+						</div>
+						<div class="hero-metrics">
+							<div class="metric-card metric-count">
+								<div class="metric-label">Packages</div>
+								<div class="metric-value" id="stat-packages">-</div>
+							</div>
+							<div class="metric-card metric-time">
+								<div class="metric-label">Deployment Date + Time</div>
+								<div class="metric-value" id="stat-latest">-</div>
+							</div>
+						</div>
 					</div>
 				</div>
 
@@ -849,14 +863,12 @@
 						<select id="version-filter" class="select">
 							<option value="latest">Selected package: newest version</option>
 						</select>
-						<button id="load-history" class="button button-secondary" type="button">Load full history</button>
 						<button id="refresh" class="button" type="button">Refresh data</button>
 					</div>
 				</div>
 
 				<div class="status-bar">
 					<span id="status-line">Loading repository metadata…</span>
-					<span id="rate-line"></span>
 				</div>
 			</section>
 		</div>
@@ -874,14 +886,12 @@
 				<div class="panel-body">
 					<div class="table-tools">
 						<button type="button" class="pill-button" id="clear-selection">Clear selection</button>
-						<button type="button" class="pill-button" id="copy-link">Copy deep link</button>
 					</div>
 					<div class="table-wrap" id="list-root"></div>
 				</div>
 			</section>
 
 			<section class="panel detail-panel" id="detail-panel">
-			<section class="panel detail-panel is-hidden" id="detail-panel">
 				<div class="panel-head">
 					<div>
 						<h3>Package Detail</h3>
@@ -890,7 +900,6 @@
 					<div class="view-tabs">
 						<button type="button" class="tab-button is-active" data-tab="overview">Overview</button>
 						<button type="button" class="tab-button" data-tab="control">Control</button>
-						<button type="button" class="tab-button" data-tab="history">History</button>
 					</div>
 				</div>
 				<div class="panel-body" id="detail-root">
@@ -904,16 +913,13 @@
 	<script>
 		const state = {
 			repo: null,
-			pagesInfo: null,
 			release: null,
-			releaseText: "",
-			packagesText: "",
+			inRelease: null,
+			releaseIndexes: [],
+			sources: [],
+			sourceByBinary: new Map(),
 			currentPackages: [],
-			snapshots: [],
 			packages: [],
-			historyLoaded: false,
-			historySource: "current",
-			releaseFingerprint: "",
 			selectedName: "",
 			selectedVersion: "latest",
 			activeTab: "overview",
@@ -922,8 +928,7 @@
 				architecture: "all",
 				sort: "latest"
 			},
-			urlSyncSuspended: false,
-			rateLimit: null
+			urlSyncSuspended: false
 		};
 
 		const elements = {
@@ -935,21 +940,16 @@
 			archFilter: document.getElementById("arch-filter"),
 			sortFilter: document.getElementById("sort-filter"),
 			versionFilter: document.getElementById("version-filter"),
-			loadHistory: document.getElementById("load-history"),
 			refresh: document.getElementById("refresh"),
 			listRoot: document.getElementById("list-root"),
 			detailPanel: document.getElementById("detail-panel"),
 			detailRoot: document.getElementById("detail-root"),
 			detailCaption: document.getElementById("detail-caption"),
 			statusLine: document.getElementById("status-line"),
-			rateLine: document.getElementById("rate-line"),
 			packageCount: document.getElementById("package-count"),
 			stateSummary: document.getElementById("state-summary"),
 			clearSelection: document.getElementById("clear-selection"),
-			copyLink: document.getElementById("copy-link"),
 			statPackages: document.getElementById("stat-packages"),
-			statSnapshots: document.getElementById("stat-snapshots"),
-			statArchitectures: document.getElementById("stat-architectures"),
 			statLatest: document.getElementById("stat-latest"),
 			tabButtons: Array.from(document.querySelectorAll(".tab-button"))
 		};
@@ -1012,86 +1012,6 @@
 			return `https://${owner}.github.io/${repo}/`;
 		}
 
-		function hashString(text) {
-			let hash = 2166136261;
-			for (let index = 0; index < text.length; index += 1) {
-				hash ^= text.charCodeAt(index);
-				hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
-			}
-			return (hash >>> 0).toString(16).padStart(8, "0");
-		}
-
-		function getReleaseFingerprint(releaseText, packagesText) {
-			const compactRelease = String(releaseText || "").replace(/\s+/g, " ").trim();
-			const compactPackages = String(packagesText || "").replace(/\s+/g, " ").trim();
-			return hashString(`${compactRelease}::${compactPackages}`);
-		}
-
-		function getHistoryCacheKey() {
-			if (!state.repo) {
-				return "";
-			}
-			return `ppa-autoindex-history-v1:${state.repo.owner}/${state.repo.repo}:${state.repo.pagesBranch}`;
-		}
-
-		function saveHistoryCache() {
-			const key = getHistoryCacheKey();
-			if (!key || !state.historyLoaded || !state.releaseFingerprint) {
-				return;
-			}
-
-			const payload = {
-				releaseFingerprint: state.releaseFingerprint,
-				savedAt: new Date().toISOString(),
-				historyLoaded: state.historyLoaded,
-				historySource: state.historySource,
-				snapshots: state.snapshots
-			};
-
-			try {
-				localStorage.setItem(key, JSON.stringify(payload));
-			} catch (error) {
-				console.warn("Unable to save history cache, likely storage quota exceeded.", error);
-			}
-		}
-
-		function loadHistoryCache() {
-			const key = getHistoryCacheKey();
-			if (!key) {
-				return null;
-			}
-			try {
-				const raw = localStorage.getItem(key);
-				if (!raw) {
-					return null;
-				}
-				const parsed = JSON.parse(raw);
-				if (!parsed || !Array.isArray(parsed.snapshots)) {
-					return null;
-				}
-				return parsed;
-			} catch (error) {
-				console.warn("Unable to read history cache.", error);
-				return null;
-			}
-		}
-
-		async function fetchJson(url) {
-			const response = await fetch(url, {
-				headers: {
-					Accept: "application/vnd.github+json"
-				}
-			});
-
-			updateRateLimit(response);
-
-			if (!response.ok) {
-				throw new Error(`Request failed (${response.status}) for ${url}`);
-			}
-
-			return response.json();
-		}
-
 		async function fetchText(url) {
 			const response = await fetch(url);
 			if (!response.ok) {
@@ -1100,45 +1020,30 @@
 			return response.text();
 		}
 
-		function updateRateLimit(response) {
-			const limit = response.headers.get("x-ratelimit-limit");
-			const remaining = response.headers.get("x-ratelimit-remaining");
-			const reset = response.headers.get("x-ratelimit-reset");
-			if (!limit || !remaining || !reset) {
-				return;
+		async function fetchOptionalText(url) {
+			try {
+				return await fetchText(url);
+			} catch (error) {
+				return "";
 			}
-
-			state.rateLimit = {
-				limit: Number(limit),
-				remaining: Number(remaining),
-				reset: Number(reset) * 1000
-			};
-
-			const resetDate = new Date(state.rateLimit.reset);
-			elements.rateLine.textContent = `GitHub API: ${remaining}/${limit} requests left, reset ${resetDate.toLocaleTimeString()}`;
 		}
 
 		async function resolveRepoContext() {
 			const inferred = inferRepoFromLocation();
 			const webBase = `https://github.com/${inferred.owner}/${inferred.repo}`;
-			const apiBase = `https://api.github.com/repos/${inferred.owner}/${inferred.repo}`;
-			const rawBase = `https://raw.githubusercontent.com/${inferred.owner}/${inferred.repo}`;
 			const pagesBranch = inferred.branchOverride || "gh-pages";
 			const pagesUrl = hostnameToPagesUrl(inferred.owner, inferred.repo);
 
 			state.repo = {
 				owner: inferred.owner,
 				repo: inferred.repo,
-				apiBase,
-				rawBase,
 				webBase,
+				rawBase: `https://raw.githubusercontent.com/${inferred.owner}/${inferred.repo}`,
 				pagesBranch,
 				pagesUrl,
 				branchWeb: `${webBase}/tree/${pagesBranch}`,
 				debsWeb: `${webBase}/tree/debs`
 			};
-
-			elements.rateLine.textContent = "GitHub API idle";
 		}
 
 		function renderRepoContext() {
@@ -1147,9 +1052,9 @@
 			}
 
 			const repoLabel = `${state.repo.owner}/${state.repo.repo}`;
-			document.title = `${state.repo.repo} · PPA Repository Explorer`;
+			document.title = `${state.repo.repo} · PPA Repository`;
 			elements.heroTitle.textContent = state.repo.repo;
-			elements.heroSummary.innerHTML = ``;
+			elements.heroSummary.innerHTML = `APT metadata is loaded directly from the current published repository content for <code>${escapeHtml(repoLabel)}</code>.`;
 			elements.repoLinks.innerHTML = [
 				`<a class="chip-link" href="${escapeHtml(state.repo.webBase)}" target="_blank" rel="noreferrer">repository</a>`,
 				`<a class="chip-link" href="${escapeHtml(state.repo.branchWeb)}" target="_blank" rel="noreferrer">${escapeHtml(state.repo.pagesBranch)} branch</a>`,
@@ -1193,6 +1098,43 @@
 		function parseRelease(text) {
 			const [entry] = parseDeb822(text);
 			return entry || {};
+		}
+
+		function stripInlineSignedText(text) {
+			const raw = String(text || "");
+			if (!raw.includes("-----BEGIN PGP SIGNATURE-----")) {
+				return raw;
+			}
+			const normalized = raw.replace(/\r\n/g, "\n");
+			const marker = "\n\n";
+			const start = normalized.indexOf(marker);
+			if (start < 0) {
+				return normalized;
+			}
+			const payload = normalized.slice(start + marker.length);
+			const signatureStart = payload.indexOf("\n-----BEGIN PGP SIGNATURE-----");
+			if (signatureStart < 0) {
+				return payload;
+			}
+			return payload.slice(0, signatureStart).trim();
+		}
+
+		function parseReleaseIndexEntries(sectionText, algorithm) {
+			if (!sectionText) {
+				return [];
+			}
+			return String(sectionText)
+				.split(/\n+/)
+				.map((line) => line.trim())
+				.filter(Boolean)
+				.map((line) => line.match(/^([0-9a-fA-F]+)\s+(\d+)\s+(.+)$/))
+				.filter(Boolean)
+				.map((match) => ({
+					algorithm,
+					hash: match[1],
+					size: Number(match[2]),
+					path: match[3]
+				}));
 		}
 
 		function normalizeMultiline(value) {
@@ -1288,6 +1230,54 @@
 				.filter(Boolean);
 		}
 
+		function parseDelimitedValues(value) {
+			return String(value || "")
+				.split(",")
+				.map((segment) => segment.trim())
+				.filter(Boolean);
+		}
+
+		function parseSourceField(value, fallbackName) {
+			const raw = String(value || "").trim();
+			if (!raw) {
+				return {
+					name: fallbackName,
+					version: ""
+				};
+			}
+			const match = raw.match(/^([^\s(]+)\s*(?:\(([^)]+)\))?$/);
+			if (!match) {
+				return {
+					name: raw,
+					version: ""
+				};
+			}
+			return {
+				name: match[1],
+				version: match[2] || ""
+			};
+		}
+
+		function parseSourceEntries(text) {
+			return parseDeb822(text).map((entry) => {
+				const files = String(entry.Files || "")
+					.split(/\n+/)
+					.map((line) => line.trim())
+					.filter(Boolean);
+				const binaries = parseDelimitedValues(entry.Binary);
+				return {
+					package: entry.Package || "",
+					version: entry.Version || "",
+					maintainer: normalizeMultiline(entry.Maintainer || ""),
+					uploaders: normalizeMultiline(entry.Uploaders || ""),
+					directory: entry.Directory || "",
+					binaries,
+					files,
+					buildDepends: normalizeMultiline(entry["Build-Depends"] || "")
+				};
+			});
+		}
+
 		function normalizeControl(entry) {
 			return Object.fromEntries(Object.entries(entry).map(([key, value]) => [key, normalizeMultiline(value)]));
 		}
@@ -1297,6 +1287,8 @@
 			const architecture = entry.Architecture || "unknown";
 			const filename = (entry.Filename || "").replace(/^\.\//, "");
 			const control = normalizeControl(entry);
+			const parsedSource = parseSourceField(entry.Source, entry.Package || filename || "unknown");
+			const sourceMeta = state.sourceByBinary.get(entry.Package || "") || null;
 			return {
 				name: entry.Package || filename || "unknown",
 				normalizedName: slugifyPackageName(entry.Package || filename || "unknown"),
@@ -1306,8 +1298,24 @@
 				maintainer: normalizeMultiline(entry.Maintainer || "Unknown maintainer"),
 				homepage: entry.Homepage || "",
 				depends: entry.Depends || "",
+				preDepends: entry["Pre-Depends"] || "",
+				recommends: entry.Recommends || "",
+				suggests: entry.Suggests || "",
+				conflicts: entry.Conflicts || "",
+				breaks: entry.Breaks || "",
+				replaces: entry.Replaces || "",
+				provides: entry.Provides || "",
+				enhances: entry.Enhances || "",
 				section: entry.Section || "",
 				priority: entry.Priority || "",
+				multiArch: entry["Multi-Arch"] || "",
+				originalMaintainer: normalizeMultiline(entry["Original-Maintainer"] || ""),
+				builtUsing: normalizeMultiline(entry["Built-Using"] || ""),
+				sourcePackageName: parsedSource.name,
+				sourcePackageVersion: parsedSource.version,
+				sourceDirectory: sourceMeta?.directory || "",
+				sourceMaintainer: sourceMeta?.maintainer || "",
+				sourceBuildDepends: sourceMeta?.buildDepends || "",
 				size: Number(entry.Size || 0),
 				installedSize: Number(entry["Installed-Size"] || 0),
 				filename,
@@ -1323,6 +1331,9 @@
 				buildDate: parseBuildDate(version),
 				control,
 				dependencyNames: parseDependencyNames(entry.Depends || ""),
+				provideNames: parseDependencyNames(entry.Provides || ""),
+				recommendNames: parseDependencyNames(entry.Recommends || ""),
+				suggestNames: parseDependencyNames(entry.Suggests || ""),
 				historicalDownloadUrl: snapshot.sha === "current"
 					? `./${encodeURI(filename)}`
 					: `${state.repo.rawBase}/${snapshot.sha}/${encodeURI(filename)}`
@@ -1330,151 +1341,56 @@
 		}
 
 		async function loadRelease() {
-			state.releaseText = await fetchText("./Release");
-			state.release = parseRelease(state.releaseText);
+			const [inReleaseText, releaseText] = await Promise.all([
+				fetchOptionalText("./InRelease"),
+				fetchOptionalText("./Release")
+			]);
+			const parsedInRelease = parseRelease(stripInlineSignedText(inReleaseText));
+			const parsedRelease = parseRelease(releaseText);
+			state.inRelease = parsedInRelease;
+			state.release = Object.keys(parsedInRelease).length ? parsedInRelease : parsedRelease;
+			state.releaseIndexes = [
+				...parseReleaseIndexEntries(state.release?.SHA256 || "", "SHA256"),
+				...parseReleaseIndexEntries(state.release?.SHA1 || "", "SHA1"),
+				...parseReleaseIndexEntries(state.release?.MD5Sum || "", "MD5")
+			];
+			if (!Object.keys(state.release || {}).length) {
+				throw new Error("Neither InRelease nor Release could be parsed from the deployed repository.");
+			}
+		}
+
+		async function loadSources() {
+			const sourcesText = await fetchOptionalText("./Sources");
+			if (!sourcesText) {
+				state.sources = [];
+				state.sourceByBinary = new Map();
+				return;
+			}
+			state.sources = parseSourceEntries(sourcesText);
+			const sourceByBinary = new Map();
+			for (const source of state.sources) {
+				for (const binary of source.binaries) {
+					if (!sourceByBinary.has(binary)) {
+						sourceByBinary.set(binary, source);
+					}
+				}
+			}
+			state.sourceByBinary = sourceByBinary;
 		}
 
 		async function loadCurrentPackages() {
-			state.packagesText = await fetchText("./Packages");
-			state.currentPackages = parseDeb822(state.packagesText).map((entry) => normalizePackageEntry(entry, {
+			const packagesText = await fetchText("./Packages");
+			state.currentPackages = parseDeb822(packagesText).map((entry) => normalizePackageEntry(entry, {
 				sha: "current",
 				htmlUrl: state.repo.branchWeb,
 				sourceDebsSha: "",
 				date: state.release?.Date || new Date().toISOString(),
 				author: "Current snapshot"
 			}));
-			state.releaseFingerprint = getReleaseFingerprint(state.releaseText, state.packagesText);
 		}
 
 		function applyCurrentOnlySnapshot() {
-			state.snapshots = [{
-				sha: "current",
-				htmlUrl: state.repo.branchWeb,
-				date: state.release?.Date || new Date().toISOString(),
-				author: "Current snapshot",
-				sourceDebsSha: "",
-				packages: state.currentPackages
-			}];
-			state.historyLoaded = false;
-			state.historySource = "current";
-		}
-
-		function applyCachedHistoryIfFresh() {
-			const cached = loadHistoryCache();
-			if (!cached || cached.releaseFingerprint !== state.releaseFingerprint) {
-				return false;
-			}
-			state.snapshots = cached.snapshots;
-			state.historyLoaded = Boolean(cached.historyLoaded);
-			state.historySource = cached.historySource || "cache";
-			return true;
-		}
-
-		async function loadSnapshotsFromApi(existingSnapshots = []) {
-			const knownShas = new Set(
-				existingSnapshots
-					.map((snapshot) => snapshot?.sha)
-					.filter((sha) => typeof sha === "string" && sha && sha !== "current")
-			);
-			const commits = [];
-			let page = 1;
-			let reachedKnownSnapshot = false;
-			while (true) {
-				const url = `${state.repo.apiBase}/commits?sha=${state.repo.pagesBranch}&per_page=100&page=${page}`;
-				const batch = await fetchJson(url);
-				if (!Array.isArray(batch) || batch.length === 0) {
-					break;
-				}
-
-				for (const commit of batch) {
-					if (knownShas.has(commit.sha)) {
-						reachedKnownSnapshot = true;
-						break;
-					}
-					commits.push(commit);
-				}
-
-				if (reachedKnownSnapshot) {
-					break;
-				}
-
-				page += 1;
-				if (batch.length < 100) {
-					break;
-				}
-
-				if (state.rateLimit && Number.isFinite(state.rateLimit.remaining) && state.rateLimit.remaining <= 2) {
-					setStatus("API quota is low. Stopping incremental history fetch early to avoid hitting limits.");
-					break;
-				}
-			}
-
-			const snapshots = [];
-			let index = 0;
-			for (const commit of commits) {
-				index += 1;
-				const sha = commit.sha;
-				const sourceDebsSha = parseSourceDebsSha(commit.commit?.message || "");
-				setStatus(`Loading historical snapshot ${index}/${commits.length}: ${sha.slice(0, 7)}…`);
-				try {
-					const text = await fetchText(`${state.repo.rawBase}/${sha}/Packages`);
-					const packages = parseDeb822(text).map((entry) => normalizePackageEntry(entry, {
-						sha,
-						htmlUrl: commit.html_url,
-						sourceDebsSha,
-						date: commit.commit?.author?.date || "",
-						author: commit.commit?.author?.name || commit.author?.login || "Unknown"
-					}));
-					snapshots.push({
-						sha,
-						htmlUrl: commit.html_url,
-						date: commit.commit?.author?.date || "",
-						author: commit.commit?.author?.name || commit.author?.login || "Unknown",
-						sourceDebsSha,
-						packages
-					});
-				} catch (error) {
-					console.warn(`Failed to load Packages for snapshot ${sha}`, error);
-				}
-			}
-			if (snapshots.length > 0 || existingSnapshots.length > 0) {
-				const merged = [...snapshots, ...existingSnapshots.filter((snapshot) => snapshot?.sha !== "current")];
-				const unique = new Map();
-				for (const snapshot of merged) {
-					if (!snapshot || !snapshot.sha || unique.has(snapshot.sha)) {
-						continue;
-					}
-					unique.set(snapshot.sha, snapshot);
-				}
-				state.snapshots = Array.from(unique.values())
-					.sort((left, right) => new Date(right.date) - new Date(left.date));
-				state.historyLoaded = true;
-				state.historySource = snapshots.length ? "api" : "cache";
-				saveHistoryCache();
-			}
-		}
-
-		async function loadFullHistoryOnDemand(force = false) {
-			if (state.historyLoaded && !force) {
-				setStatus(`History already loaded (${state.snapshots.length} snapshots).`);
-				return;
-			}
-
-			elements.loadHistory.disabled = true;
-			setStatus("Loading full deployment history from GitHub API…");
-			try {
-				const cached = loadHistoryCache();
-				const existingSnapshots = Array.isArray(cached?.snapshots) ? cached.snapshots : [];
-				await loadSnapshotsFromApi(existingSnapshots);
-				buildPackageIndex();
-				render();
-				setStatus(`History available: ${state.snapshots.length} snapshots. Cache is updated and reused while Release/Packages stay unchanged.`);
-			} catch (error) {
-				console.error(error);
-				setStatus("Unable to load full history right now. Current snapshot mode is still available.");
-			} finally {
-				elements.loadHistory.disabled = false;
-			}
+			return state.currentPackages.map((entry) => ({ ...entry }));
 		}
 
 		function buildPackageIndex() {
@@ -1486,8 +1402,7 @@
 					.filter(Boolean)
 			);
 
-			for (const snapshot of state.snapshots) {
-				for (const pkg of snapshot.packages) {
+			for (const pkg of applyCurrentOnlySnapshot()) {
 					const current = grouped.get(pkg.name) || {
 						name: pkg.name,
 						normalizedName: pkg.normalizedName,
@@ -1496,7 +1411,11 @@
 						descriptions: new Set(),
 						architectures: new Set(),
 						homepages: new Set(),
+						sourcePackages: new Set(),
 						dependencies: new Set(),
+						recommends: new Set(),
+						suggests: new Set(),
+						provides: new Set(),
 						latestDeployedAt: "",
 						latestEntry: null,
 						firstSeenAt: "",
@@ -1511,6 +1430,18 @@
 					}
 					if (pkg.homepage) {
 						current.homepages.add(pkg.homepage);
+					}
+					if (pkg.sourcePackageName) {
+						current.sourcePackages.add(pkg.sourcePackageName);
+					}
+					for (const value of pkg.recommendNames) {
+						current.recommends.add(value);
+					}
+					for (const value of pkg.suggestNames) {
+						current.suggests.add(value);
+					}
+					for (const value of pkg.provideNames) {
+						current.provides.add(value);
 					}
 
 					const versionEntry = current.versions.get(pkg.version) || {
@@ -1542,7 +1473,6 @@
 
 					grouped.set(pkg.name, current);
 				}
-			}
 
 			state.packages = Array.from(grouped.values()).map((pkg) => {
 				const versions = Array.from(pkg.versions.values())
@@ -1568,16 +1498,24 @@
 					descriptions: Array.from(pkg.descriptions),
 					architectures: Array.from(pkg.architectures).sort(),
 					homepages: Array.from(pkg.homepages),
+					sourcePackages: Array.from(pkg.sourcePackages).sort(),
 					dependencies: Array.from(pkg.dependencies).sort(),
+					recommends: Array.from(pkg.recommends).sort(),
+					suggests: Array.from(pkg.suggests).sort(),
+					provides: Array.from(pkg.provides).sort(),
 					versions,
-					deploymentCount: pkg.deployments.length,
-					snapshotCount: new Set(pkg.deployments.map((entry) => entry.snapshotSha)).size,
+					deploymentCount: currentEntries.length,
+					snapshotCount: 1,
 					currentEntries,
 					searchableText: [
 						pkg.name,
 						Array.from(pkg.maintainers).join(" "),
 						Array.from(pkg.descriptions).join(" "),
 						Array.from(pkg.dependencies).join(" "),
+						Array.from(pkg.sourcePackages).join(" "),
+						Array.from(pkg.recommends).join(" "),
+						Array.from(pkg.suggests).join(" "),
+						Array.from(pkg.provides).join(" "),
 						versions.map((entry) => entry.version).join(" "),
 						Array.from(pkg.architectures).join(" ")
 					].join(" ").toLowerCase()
@@ -1785,20 +1723,21 @@
 				const latest = pkg.latestEntry;
 				const current = pkg.currentEntries[0] || latest;
 				const isActive = selectedPackage && selectedPackage.name === pkg.name;
+				const latestVersion = latest?.version || "Unknown";
 				return `
 					<tr class="${isActive ? "is-active" : ""}" data-package-row="${escapeHtml(pkg.name)}" aria-selected="${isActive ? "true" : "false"}">
 						<td>
 							<div class="table-name">${escapeHtml(pkg.name)}</div>
 							<div class="table-description">${escapeHtml(latest?.description || pkg.descriptions[0] || "No description")}</div>
 						</td>
-						<td>${escapeHtml(latest?.version || "Unknown")}</td>
+						<td class="version-cell"><span class="version-text" title="${escapeHtml(latestVersion)}">${escapeHtml(latestVersion)}</span></td>
 						<td>${escapeHtml(pkg.architectures.join(", "))}</td>
 						<td>${escapeHtml(current?.maintainer || pkg.maintainers[0] || "Unknown")}</td>
 						<td>
 							<div>${escapeHtml(formatDate(pkg.latestDeployedAt))}</div>
 							<div class="hint">${escapeHtml(formatRelativeDate(pkg.latestDeployedAt))}</div>
 						</td>
-						<td>${escapeHtml(current?.sourceDebsSha ? current.sourceDebsSha.slice(0, 7) : "-")}</td>
+						<td>${escapeHtml(current?.filename || "-")}</td>
 						<td><a class="row-link" href="${escapeHtml(buildPackageUrl(pkg.name, "latest", state.activeTab))}" data-package-link="${escapeHtml(pkg.name)}">View</a></td>
 					</tr>
 				`;
@@ -1813,7 +1752,7 @@
 							<th>Architectures</th>
 							<th>Maintainer</th>
 							<th><button class="table-sort ${state.filters.sort === "latest" ? "is-active" : ""}" data-sort="latest" type="button">Latest Deploy</button></th>
-							<th>Related Commit</th>
+							<th>Artifact</th>
 							<th>Detail</th>
 						</tr>
 					</thead>
@@ -1880,6 +1819,16 @@
 				}).join("")
 				: '<span class="muted">No dependency packages declared.</span>';
 
+			const relationSummary = [
+				current.preDepends ? `Pre-Depends: ${current.preDepends}` : "",
+				current.recommends ? `Recommends: ${current.recommends}` : "",
+				current.suggests ? `Suggests: ${current.suggests}` : "",
+				current.provides ? `Provides: ${current.provides}` : "",
+				current.conflicts ? `Conflicts: ${current.conflicts}` : "",
+				current.breaks ? `Breaks: ${current.breaks}` : "",
+				current.replaces ? `Replaces: ${current.replaces}` : ""
+			].filter(Boolean);
+
 			return `
 				<div class="detail-hero">
 					<div class="detail-title-row">
@@ -1896,31 +1845,20 @@
 
 					<div class="detail-actions">
 						<a class="action-link" href="${escapeHtml(current.historicalDownloadUrl)}" target="_blank" rel="noreferrer">Download selected artifact</a>
-						${current.sourceDebsUrl ? `<a class="action-link" href="${escapeHtml(current.sourceDebsUrl)}" target="_blank" rel="noreferrer">Last related source commit ${escapeHtml(current.sourceDebsSha.slice(0, 7))}</a>` : ""}
-						<a class="action-link" href="${escapeHtml(current.snapshotUrl)}" target="_blank" rel="noreferrer">Deploy commit ${escapeHtml(current.snapshotSha.slice(0, 7))}</a>
-					</div>
-				</div>
-
-				<div class="route-card">
-					<strong>Deep-Link State</strong>
-					<div class="route-grid">
-						<div class="detail-card">
-							<strong>Current URI</strong>
-							<div class="control-value">${escapeHtml(`${location.pathname}?${buildUrlParams().toString()}`)}</div>
-						</div>
-						<div class="detail-card">
-							<strong>Selection Semantics</strong>
-							<div class="control-value">If only <code>pkg=${escapeHtml(pkg.name)}</code> is specified, the newest version is shown automatically.</div>
-						</div>
+						${current.homepage ? `<a class="action-link" href="${escapeHtml(current.homepage)}" target="_blank" rel="noreferrer">Homepage</a>` : ""}
 					</div>
 				</div>
 
 				<div class="detail-grid">
 					<div class="detail-card"><strong>Selected version</strong><div>${escapeHtml(versionEntry.version)}</div></div>
-					<div class="detail-card"><strong>Latest deploy</strong><div>${escapeHtml(formatDate(pkg.latestDeployedAt))}</div></div>
+					<div class="detail-card"><strong>Published</strong><div>${escapeHtml(formatDate(pkg.latestDeployedAt))}</div></div>
+					<div class="detail-card"><strong>Source package</strong><div>${escapeHtml(current.sourcePackageName || "-")}${current.sourcePackageVersion ? ` (${escapeHtml(current.sourcePackageVersion)})` : ""}</div></div>
+					<div class="detail-card"><strong>Source maintainer</strong><div>${escapeHtml(current.sourceMaintainer || current.originalMaintainer || "-")}</div></div>
 					<div class="detail-card"><strong>Maintainers</strong><div>${escapeHtml(versionEntry.maintainers.join(" / "))}</div></div>
 					<div class="detail-card"><strong>Architectures</strong><div>${escapeHtml(versionEntry.architectures.join(", "))}</div></div>
-					<div class="detail-card"><strong>First seen</strong><div>${escapeHtml(formatDate(pkg.firstSeenAt))}</div></div>
+					<div class="detail-card"><strong>Multi-Arch</strong><div>${escapeHtml(current.multiArch || "-")}</div></div>
+					<div class="detail-card"><strong>Built-Using</strong><div>${escapeHtml(current.builtUsing || "-")}</div></div>
+					<div class="detail-card"><strong>File</strong><div>${escapeHtml(current.filename || "-")}</div></div>
 					<div class="detail-card"><strong>Package size</strong><div>${escapeHtml(formatBytes(current.size))}</div></div>
 					<div class="detail-card"><strong>Installed size</strong><div>${escapeHtml(current.installedSize ? `${current.installedSize} KB` : "-")}</div></div>
 					<div class="detail-card"><strong>Build stamp</strong><div>${escapeHtml(current.buildDate ? formatDate(current.buildDate) : "Unavailable")}</div></div>
@@ -1936,11 +1874,19 @@
 						<div class="dep-list">${dependencyLinks}</div>
 					</div>
 					<div class="dependency-block">
-						<strong>Artifact and Homepage</strong>
+						<strong>Checksums</strong>
 						<div class="dep-list">
-							<a class="history-link" href="${escapeHtml(current.historicalDownloadUrl)}" target="_blank" rel="noreferrer">Artifact download</a>
-							${current.homepage ? `<a class="history-link" href="${escapeHtml(current.homepage)}" target="_blank" rel="noreferrer">Homepage</a>` : ""}
+							<span class="dep-pill">SHA256 ${escapeHtml((current.sha256 || "-").slice(0, 12) || "-")}</span>
+							<span class="dep-pill">MD5 ${escapeHtml((current.md5sum || "-").slice(0, 12) || "-")}</span>
 						</div>
+					</div>
+					<div class="dependency-block">
+						<strong>APT Relations</strong>
+						<div class="control-value">${escapeHtml(relationSummary.join(" | ") || "No additional relation fields in this package entry.")}</div>
+					</div>
+					<div class="dependency-block">
+						<strong>Repository Index Insight</strong>
+						<div class="control-value">${escapeHtml(state.releaseIndexes.length ? `${state.releaseIndexes.length} index records parsed from Release/InRelease checksums.` : "No index checksum blocks parsed from Release metadata.")}</div>
 					</div>
 				</div>
 			`;
@@ -1966,46 +1912,6 @@
 						<tbody>${rows}</tbody>
 					</table>
 				</div>
-			`;
-		}
-
-		function renderHistoryTab(pkg, versionEntry) {
-			const versionLinks = pkg.versions.map((entry) => `
-				<a class="history-link" href="${escapeHtml(buildPackageUrl(pkg.name, entry.version, "history"))}" data-version-link="${escapeHtml(entry.version)}">${escapeHtml(entry.version)}</a>
-			`).join("");
-
-			const lazyNotice = state.historyLoaded
-				? ""
-				: `<div class="warning">You are viewing current-snapshot history only. Use <button type="button" class="pill-button" data-inline-load-history="true">Load full history</button> to fetch full deployment history on demand.</div>`;
-
-			const entries = versionEntry.entries.map((entry) => `
-				<article class="history-entry">
-					<div class="history-head">
-						<div>
-							<h5 class="history-title">${escapeHtml(entry.version)} · ${escapeHtml(entry.architecture)}</h5>
-							<div class="hint">Deployed ${escapeHtml(formatDate(entry.deployedAt))} by ${escapeHtml(entry.deployedBy || "Unknown")}</div>
-						</div>
-						<div class="inline-list">
-							<span class="history-pill">${escapeHtml(formatRelativeDate(entry.deployedAt))}</span>
-							${entry.sourceDebsSha ? `<span class="history-pill">src ${escapeHtml(entry.sourceDebsSha.slice(0, 7))}</span>` : ""}
-						</div>
-					</div>
-					<div class="history-links" style="margin-top: 12px;">
-						<a class="history-link" href="${escapeHtml(entry.historicalDownloadUrl)}" target="_blank" rel="noreferrer">Download artifact</a>
-						<a class="history-link" href="${escapeHtml(entry.snapshotUrl)}" target="_blank" rel="noreferrer">Pages commit ${escapeHtml(entry.snapshotSha.slice(0, 7))}</a>
-						${entry.sourceDebsUrl ? `<a class="history-link" href="${escapeHtml(entry.sourceDebsUrl)}" target="_blank" rel="noreferrer">Source commit ${escapeHtml(entry.sourceDebsSha.slice(0, 7))}</a>` : ""}
-					</div>
-				</article>
-			`).join("");
-
-			return `
-				<div class="control-block">
-					<strong>Version History</strong>
-					<div class="control-value">Select any version to update the URL and show historical downloads. Without <code>version</code>, the newest one is shown.</div>
-				</div>
-				${lazyNotice}
-				<div class="history-links">${versionLinks}</div>
-				<div class="history-list">${entries}</div>
 			`;
 		}
 
@@ -2041,9 +1947,6 @@
 				case "control":
 					content = renderControlTab(current);
 					break;
-				case "history":
-					content = renderHistoryTab(pkg, versionEntry);
-					break;
 				case "overview":
 				default:
 					content = renderOverviewTab(pkg, versionEntry, current);
@@ -2063,41 +1966,11 @@
 				});
 			}
 
-			for (const versionLink of elements.detailRoot.querySelectorAll("[data-version-link]")) {
-				versionLink.addEventListener("click", (event) => {
-					event.preventDefault();
-					state.selectedVersion = versionLink.dataset.versionLink || "latest";
-					state.activeTab = "history";
-					updateUrlState();
-					render();
-				});
-			}
-
-			for (const trigger of elements.detailRoot.querySelectorAll("[data-inline-load-history]")) {
-				trigger.addEventListener("click", () => {
-					loadFullHistoryOnDemand(false);
-				});
-			}
 		}
 
 		function renderStats() {
-			const releaseArchitectures = String(state.release?.Architectures || "")
-				.split(/\s+/)
-				.map((item) => item.trim())
-				.filter(Boolean);
-
 			elements.statPackages.textContent = String(state.packages.length);
-			elements.statSnapshots.textContent = String(state.snapshots.length);
-			elements.statArchitectures.textContent = releaseArchitectures.length
-				? releaseArchitectures.join(", ")
-				: String(new Set(state.packages.flatMap((pkg) => pkg.architectures)).size || "-");
-
-			const latestSnapshot = state.snapshots[0];
-			elements.statLatest.textContent = latestSnapshot ? formatDate(latestSnapshot.date, false) : "-";
-
-			elements.loadHistory.textContent = state.historyLoaded
-				? "Reload full history"
-				: "Load full history";
+			elements.statLatest.textContent = state.release?.Date ? formatDate(state.release.Date, true) : "-";
 		}
 
 		function render() {
@@ -2107,17 +1980,6 @@
 			renderList();
 			renderDetail();
 			updateUrlState(true);
-		}
-
-		async function copyCurrentLink() {
-			const url = new URL(location.href);
-			try {
-				await navigator.clipboard.writeText(url.toString());
-				setStatus("Copied the current deep link to the clipboard.");
-			} catch (error) {
-				console.warn("Clipboard write failed", error);
-				setStatus(`Deep link: ${url.toString()}`);
-			}
 		}
 
 		function bindEvents() {
@@ -2149,20 +2011,12 @@
 				initialize(false);
 			});
 
-			elements.loadHistory.addEventListener("click", () => {
-				loadFullHistoryOnDemand(state.historyLoaded);
-			});
-
 			elements.clearSelection.addEventListener("click", () => {
 				state.selectedName = "";
 				state.selectedVersion = "latest";
 				state.activeTab = "overview";
 				updateUrlState();
 				render();
-			});
-
-			elements.copyLink.addEventListener("click", () => {
-				copyCurrentLink();
 			});
 
 			for (const button of elements.tabButtons) {
@@ -2180,47 +2034,34 @@
 		}
 
 		async function initialize(isInitialLoad = true) {
-			elements.loadHistory.disabled = true;
 			elements.refresh.disabled = true;
 			setStatus("Resolving repository from the current URL…");
 			elements.listRoot.innerHTML = '<div class="status">Loading remote repository state…</div>';
-			elements.detailRoot.innerHTML = '<div class="status">Loading current APT snapshot and checking local history cache…</div>';
+			elements.detailRoot.innerHTML = '<div class="status">Loading current APT snapshot…</div>';
 
 			try {
 				state.repo = null;
-				state.pagesInfo = null;
 				state.release = null;
-				state.releaseText = "";
-				state.packagesText = "";
+				state.inRelease = null;
+				state.releaseIndexes = [];
+				state.sources = [];
+				state.sourceByBinary = new Map();
 				state.currentPackages = [];
-				state.snapshots = [];
 				state.packages = [];
-				state.historyLoaded = false;
-				state.historySource = "current";
-				state.releaseFingerprint = "";
 
 				await resolveRepoContext();
 				renderRepoContext();
 				applyUrlState();
 				setStatus(`Fetching Release and current Packages for ${state.repo.owner}/${state.repo.repo}…`);
 				await loadRelease();
+				await loadSources();
 				await loadCurrentPackages();
-				applyCurrentOnlySnapshot();
-
-				const restoredFromCache = applyCachedHistoryIfFresh();
-				if (restoredFromCache) {
-					state.historySource = "cache";
-				}
 
 				buildPackageIndex();
 				render();
 
 				const pkg = getSelectedPackage();
-				if (restoredFromCache) {
-					setStatus(`Loaded ${state.packages.length} packages using cached history (${state.snapshots.length} snapshots). No API call needed.${pkg ? ` Showing ${pkg.name}.` : ""}`);
-				} else {
-					setStatus(`Loaded ${state.packages.length} packages from current APT snapshot. Full history is available on demand.${pkg ? ` Showing ${pkg.name}.` : ""}`);
-				}
+				setStatus(`Loaded ${state.packages.length} packages from current APT metadata (${state.sources.length} source entries, ${state.releaseIndexes.length} release index checks parsed).${pkg ? ` Showing ${pkg.name}.` : ""}`);
 
 				if (isInitialLoad) {
 					updateUrlState(true);
@@ -2231,7 +2072,6 @@
 				elements.detailRoot.innerHTML = `<div class="warning">${escapeHtml(error.message || String(error))}</div>`;
 				setStatus("Loading failed.");
 			} finally {
-				elements.loadHistory.disabled = false;
 				elements.refresh.disabled = false;
 			}
 		}
