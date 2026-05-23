@@ -85,7 +85,7 @@
 		}
 
 		.workspace-shell {
-			width: min(100vw - 18px, 2200px);
+			width: calc(100vw - 12px);
 			margin: 16px auto 0;
 		}
 
@@ -353,9 +353,16 @@
 
 		.layout {
 			display: grid;
-			grid-template-columns: minmax(0, 1.75fr) minmax(320px, 0.9fr);
+			grid-template-columns: minmax(0, 1fr) 0fr;
 			gap: 14px;
 			align-items: start;
+			justify-content: center;
+			transition: grid-template-columns 220ms ease, gap 220ms ease;
+		}
+
+		.layout.has-selection {
+			grid-template-columns: minmax(0, 1.9fr) minmax(320px, 0.85fr);
+			justify-content: stretch;
 		}
 
 		.list-panel,
@@ -364,16 +371,25 @@
 		}
 
 		.list-panel {
+			width: min(100%, 1800px);
+			justify-self: center;
+			transition: width 220ms ease, justify-self 220ms ease;
+		}
+
+		.layout.has-selection .list-panel {
+			width: 100%;
+			justify-self: stretch;
+		}
+
+		.list-panel {
 			display: grid;
-			grid-template-rows: auto minmax(0, 1fr);
-			height: calc(100vh - 42px);
+			grid-template-rows: auto auto;
 		}
 
 		.list-panel .panel-body {
 			display: grid;
-			grid-template-rows: auto minmax(0, 1fr);
+			grid-template-rows: auto auto;
 			gap: 12px;
-			min-height: 0;
 		}
 
 		.detail-panel {
@@ -382,6 +398,18 @@
 			max-height: calc(100vh - 24px);
 			display: grid;
 			grid-template-rows: auto minmax(0, 1fr);
+			align-self: start;
+			opacity: 1;
+			transform: translateX(0);
+			transform-origin: right center;
+			transition: opacity 180ms ease, transform 220ms ease, visibility 220ms ease;
+		}
+
+		.detail-panel.is-hidden {
+			opacity: 0;
+			transform: translateX(28px);
+			visibility: hidden;
+			pointer-events: none;
 		}
 
 		.detail-panel .panel-body {
@@ -424,14 +452,13 @@
 		}
 
 		.table-wrap {
-			overflow: auto;
+			overflow-x: auto;
+			overflow-y: visible;
 			border: 1px solid var(--line);
 			border-radius: var(--radius-lg);
 			background: rgba(255, 255, 255, 0.68);
 			-webkit-overflow-scrolling: touch;
 			overflow-anchor: none;
-			min-height: 0;
-			height: 100%;
 		}
 
 		table {
@@ -638,8 +665,8 @@
 		}
 
 		@media (max-width: 1360px) {
-			.layout {
-				grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.9fr);
+			.layout.has-selection {
+				grid-template-columns: minmax(0, 1.7fr) minmax(280px, 0.82fr);
 			}
 
 			.toolbar-fields {
@@ -648,8 +675,16 @@
 		}
 
 		@media (max-width: 900px) {
-			.layout {
+			.layout,
+			.layout.has-selection {
 				grid-template-columns: 1fr;
+				justify-content: stretch;
+			}
+
+			.list-panel,
+			.layout.has-selection .list-panel {
+				width: 100%;
+				justify-self: stretch;
 			}
 
 			.list-panel,
@@ -678,7 +713,7 @@
 
 			.hero-shell,
 			.workspace-shell {
-				width: min(100vw - 12px, 1580px);
+				width: calc(100vw - 12px);
 			}
 
 			.hero,
@@ -846,6 +881,7 @@
 			</section>
 
 			<section class="panel detail-panel" id="detail-panel">
+			<section class="panel detail-panel is-hidden" id="detail-panel">
 				<div class="panel-head">
 					<div>
 						<h3>Package Detail</h3>
@@ -1976,10 +2012,17 @@
 		function renderDetail() {
 			const pkg = getSelectedPackage();
 			if (!pkg) {
+				elements.layout.classList.remove("has-selection");
+				elements.detailPanel.classList.add("is-hidden");
+				elements.detailPanel.setAttribute("aria-hidden", "true");
 				elements.detailCaption.textContent = "No package selected";
 				elements.detailRoot.innerHTML = '<div class="empty">The table stays unselected by default. Select any package row, or open <code>?pkg=package-name</code>. When only the package is provided, the newest version is shown automatically.</div>';
 				return;
 			}
+
+			elements.layout.classList.add("has-selection");
+			elements.detailPanel.classList.remove("is-hidden");
+			elements.detailPanel.setAttribute("aria-hidden", "false");
 
 			const versionEntry = getSelectedVersionEntry(pkg);
 			const current = versionEntry?.entries[0] || pkg.latestEntry;
