@@ -520,7 +520,16 @@
 		}
 
 		.mobile-back {
-			display: none;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			padding: 8px 12px;
+			min-height: 38px;
+			border-radius: 10px;
+			border: 1px solid var(--line);
+			background: rgba(255, 255, 255, 0.86);
+			font-weight: 700;
+			margin-bottom: 8px;
 		}
 
 		.panel-body {
@@ -875,18 +884,6 @@
 				visibility: hidden;
 			}
 
-			.mobile-back {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				padding: 8px 12px;
-				min-height: 38px;
-				border-radius: 10px;
-				border: 1px solid var(--line);
-				background: rgba(255, 255, 255, 0.86);
-				font-weight: 700;
-			}
-
 			.hero-metrics {
 				grid-template-columns: repeat(2, minmax(0, 1fr));
 			}
@@ -1009,7 +1006,7 @@
 								<div class="metric-value" id="stat-packages">-</div>
 							</div>
 							<div class="metric-card metric-time">
-								<div class="metric-label">Deployment Date + Time</div>
+								<div class="metric-label">Last Deployment</div>
 								<div class="metric-value" id="stat-latest">-</div>
 							</div>
 						</div>
@@ -1031,7 +1028,7 @@
 						<select id="version-filter" class="select">
 							<option value="latest">Selected package: newest version</option>
 						</select>
-						<button id="refresh" class="button" type="button">Refresh data</button>
+						<button id="refresh" class="button" type="button">Refresh</button>
 					</div>
 				</div>
 
@@ -1052,7 +1049,6 @@
 					</div>
 					<div class="list-head-actions">
 						<div class="state-summary" id="state-summary"></div>
-						<button type="button" class="pill-button" id="clear-selection">Clear selection</button>
 					</div>
 				</div>
 				<div class="panel-body">
@@ -1063,7 +1059,7 @@
 			<section class="panel detail-panel" id="detail-panel">
 				<div class="panel-head">
 					<div>
-						<button type="button" class="mobile-back" id="detail-back">Back</button>
+						<button type="button" class="mobile-back" id="detail-back">Close</button>
 						<h3>Package Detail</h3>
 						<div class="hint" id="detail-caption">Select a package or open ?pkg=name to see newest details</div>
 						<div class="detail-arch-picker">
@@ -1994,7 +1990,7 @@
 				const artifactName = current?.filename || "-";
 				const homepageIcon = current?.homepage
 					? `<a class="icon-link" href="${escapeHtml(current.homepage)}" target="_blank" rel="noreferrer" title="Open homepage" aria-label="Open homepage">
-						<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5L12 4l9 7.5"></path><path d="M6.5 10.5V20h11V10.5"></path><path d="M10 20v-5h4v5"></path></svg>
+						<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 13.5l3-3"></path><path d="M8.8 15.2l-1.6 1.6a4 4 0 1 1-5.7-5.7l1.6-1.6"></path><path d="M15.2 8.8l1.6-1.6a4 4 0 1 1 5.7 5.7l-1.6 1.6"></path><path d="M14 10l-4 4"></path></svg>
 					</a>`
 					: "";
 				return `
@@ -2115,7 +2111,7 @@
 							<div class="detail-intro">${escapeHtml(current.description)}</div>
 						</div>
 						<div class="inline-list">
-							${current.homepage ? `<a class="icon-link" href="${escapeHtml(current.homepage)}" target="_blank" rel="noreferrer" title="Open homepage" aria-label="Open homepage"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5L12 4l9 7.5"></path><path d="M6.5 10.5V20h11V10.5"></path><path d="M10 20v-5h4v5"></path></svg></a>` : ""}
+							${current.homepage ? `<a class="icon-link" href="${escapeHtml(current.homepage)}" target="_blank" rel="noreferrer" title="Open homepage" aria-label="Open homepage"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 13.5l3-3"></path><path d="M8.8 15.2l-1.6 1.6a4 4 0 1 1-5.7-5.7l1.6-1.6"></path><path d="M15.2 8.8l1.6-1.6a4 4 0 1 1 5.7 5.7l-1.6 1.6"></path><path d="M14 10l-4 4"></path></svg></a>` : ""}
 							<span class="tag">${escapeHtml(versionEntry.version)}</span>
 							<span class="tag">${escapeHtml(current.architecture)}</span>
 							<span class="tag">${pkg.deploymentCount} deployments</span>
