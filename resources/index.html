@@ -143,6 +143,23 @@
 			text-transform: uppercase;
 		}
 
+		.eyebrow-link {
+			text-decoration: none;
+			border: 1px solid rgba(15, 118, 110, 0.16);
+		}
+
+		.eyebrow-link:hover,
+		.eyebrow-link:focus-visible {
+			border-color: rgba(15, 118, 110, 0.38);
+			outline: none;
+		}
+
+		.eyebrow-github {
+			background: rgba(217, 119, 6, 0.14);
+			border-color: rgba(180, 83, 9, 0.22);
+			color: #9a3412;
+		}
+
 		.tag,
 		.state-pill,
 		.dep-pill,
@@ -158,18 +175,6 @@
 			line-height: 0.96;
 			letter-spacing: -0.05em;
 		}
-		.hero-title-link {
-			text-decoration: none;
-			border-bottom: 2px solid transparent;
-			transition: border-color 120ms ease;
-		}
-
-		.hero-title-link:hover,
-		.hero-title-link:focus-visible {
-			border-bottom-color: rgba(15, 118, 110, 0.45);
-			outline: none;
-		}
-
 		.hero p {
 			margin: 0;
 			max-width: 900px;
@@ -405,6 +410,14 @@
 			border: 1px solid var(--line);
 		}
 
+		.list-head-actions {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
 		.layout {
 			display: grid;
 			grid-template-columns: minmax(0, 1fr) 0fr;
@@ -504,6 +517,10 @@
 			margin: 0;
 			font-size: 1rem;
 			letter-spacing: -0.02em;
+		}
+
+		.mobile-back {
+			display: none;
 		}
 
 		.panel-body {
@@ -609,6 +626,46 @@
 			font-weight: 800;
 			letter-spacing: -0.02em;
 			margin-bottom: 4px;
+		}
+
+		.table-name-row {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 8px;
+		}
+
+		.icon-link {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 32px;
+			height: 32px;
+			border-radius: 999px;
+			border: 1px solid var(--line);
+			background: rgba(255, 255, 255, 0.82);
+			color: var(--accent-strong);
+			text-decoration: none;
+			flex: 0 0 auto;
+			transition: background 120ms ease, border-color 120ms ease, transform 120ms ease;
+		}
+
+		.icon-link svg {
+			width: 16px;
+			height: 16px;
+			stroke: currentColor;
+			fill: none;
+			stroke-width: 1.9;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+		}
+
+		.icon-link:hover,
+		.icon-link:focus-visible {
+			background: rgba(236, 253, 245, 0.86);
+			border-color: rgba(15, 118, 110, 0.3);
+			transform: translateY(-1px);
+			outline: none;
 		}
 
 		.muted,
@@ -789,6 +846,47 @@
 				grid-template-columns: 1fr;
 			}
 
+			body.mobile-detail-open {
+				overflow: hidden;
+			}
+
+			body.mobile-detail-open .detail-panel {
+				position: fixed;
+				inset: 0;
+				z-index: 60;
+				max-height: none;
+				width: 100vw;
+				height: 100vh;
+				border-radius: 0;
+			}
+
+			body.mobile-detail-open .detail-panel .panel-head {
+				position: sticky;
+				top: 0;
+				z-index: 61;
+			}
+
+			body.mobile-detail-open .detail-panel .panel-body {
+				overflow: auto;
+				max-height: calc(100vh - 88px);
+			}
+
+			body.mobile-detail-open .list-panel {
+				visibility: hidden;
+			}
+
+			.mobile-back {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				padding: 8px 12px;
+				min-height: 38px;
+				border-radius: 10px;
+				border: 1px solid var(--line);
+				background: rgba(255, 255, 255, 0.86);
+				font-weight: 700;
+			}
+
 			.hero-metrics {
 				grid-template-columns: repeat(2, minmax(0, 1fr));
 			}
@@ -898,12 +996,11 @@
 			<section class="hero">
 				<div class="hero-top">
 					<div class="hero-intro">
-						<div class="eyebrow">APT Repository</div>
-						<h1><a id="hero-title-link" class="hero-title-link" href="#" target="_blank" rel="noreferrer">PPA Repository</a></h1>
-						<p id="hero-summary">
-							This page derives the backing GitHub repository from the current URL, loads the APT metadata from the current directory,
-							and reconstructs deployment history from the Pages branch automatically.
-						</p>
+						<div class="inline-list">
+							<a id="apt-repo-link" class="eyebrow eyebrow-link" href="#">APT Repository</a>
+							<a id="github-repo-link" class="eyebrow eyebrow-link eyebrow-github" href="#" target="_blank" rel="noreferrer">GitHub Repository</a>
+						</div>
+						<h1 id="hero-title">owner/repo</h1>
 					</div>
 					<div class="hero-corner">
 						<div class="hero-metrics">
@@ -940,6 +1037,7 @@
 
 				<div class="status-bar">
 					<span id="status-line">Loading repository metadata…</span>
+					<span id="update-countdown">Next refresh in --s</span>
 				</div>
 			</section>
 		</div>
@@ -952,12 +1050,12 @@
 						<h2>Packages</h2>
 						<div class="hint" id="package-count">0 shown</div>
 					</div>
-					<div class="state-summary" id="state-summary"></div>
-				</div>
-				<div class="panel-body">
-					<div class="table-tools">
+					<div class="list-head-actions">
+						<div class="state-summary" id="state-summary"></div>
 						<button type="button" class="pill-button" id="clear-selection">Clear selection</button>
 					</div>
+				</div>
+				<div class="panel-body">
 					<div class="table-wrap" id="list-root"></div>
 				</div>
 			</section>
@@ -965,6 +1063,7 @@
 			<section class="panel detail-panel" id="detail-panel">
 				<div class="panel-head">
 					<div>
+						<button type="button" class="mobile-back" id="detail-back">Back</button>
 						<h3>Package Detail</h3>
 						<div class="hint" id="detail-caption">Select a package or open ?pkg=name to see newest details</div>
 						<div class="detail-arch-picker">
@@ -993,6 +1092,9 @@
 			release: null,
 			inRelease: null,
 			releaseIndexes: [],
+			releaseRawText: "",
+			packagesRawText: "",
+			lastSnapshotFingerprint: "",
 			sources: [],
 			sourceByBinary: new Map(),
 			currentPackages: [],
@@ -1006,13 +1108,18 @@
 				architecture: "all",
 				sort: "latest"
 			},
-			urlSyncSuspended: false
+			urlSyncSuspended: false,
+			backgroundUpdateTimerId: null,
+			backgroundUpdateInFlight: false,
+			backgroundCountdownTimerId: null,
+			nextBackgroundUpdateAt: 0
 		};
 
 		const elements = {
 			layout: document.getElementById("workspace-layout"),
-			heroTitleLink: document.getElementById("hero-title-link"),
-			heroSummary: document.getElementById("hero-summary"),
+			heroTitle: document.getElementById("hero-title"),
+			aptRepoLink: document.getElementById("apt-repo-link"),
+			githubRepoLink: document.getElementById("github-repo-link"),
 			search: document.getElementById("search"),
 			archFilter: document.getElementById("arch-filter"),
 			sortFilter: document.getElementById("sort-filter"),
@@ -1023,7 +1130,9 @@
 			detailRoot: document.getElementById("detail-root"),
 			detailCaption: document.getElementById("detail-caption"),
 			detailArchFilter: document.getElementById("detail-arch-filter"),
+			detailBack: document.getElementById("detail-back"),
 			statusLine: document.getElementById("status-line"),
+			updateCountdown: document.getElementById("update-countdown"),
 			packageCount: document.getElementById("package-count"),
 			stateSummary: document.getElementById("state-summary"),
 			clearSelection: document.getElementById("clear-selection"),
@@ -1047,6 +1156,18 @@
 
 		function setStatus(message) {
 			elements.statusLine.textContent = message;
+		}
+
+		function updateBackgroundCountdownLine() {
+			if (!elements.updateCountdown) {
+				return;
+			}
+			if (!state.nextBackgroundUpdateAt) {
+				elements.updateCountdown.textContent = "Next refresh in --s";
+				return;
+			}
+			const seconds = Math.max(0, Math.ceil((state.nextBackgroundUpdateAt - Date.now()) / 1000));
+			elements.updateCountdown.textContent = `Next refresh in ${seconds}s`;
 		}
 
 		function getQueryOverrides() {
@@ -1091,7 +1212,12 @@
 		}
 
 		async function fetchText(url) {
-			const response = await fetch(url);
+			const response = await fetch(url, {
+				cache: "no-store",
+				headers: {
+					"Cache-Control": "no-cache"
+				}
+			});
 			if (!response.ok) {
 				throw new Error(`Request failed (${response.status}) for ${url}`);
 			}
@@ -1130,10 +1256,10 @@
 			}
 
 			const repoLabel = `${state.repo.owner}/${state.repo.repo}`;
-			document.title = `${state.repo.repo} · PPA Repository`;
-			elements.heroTitleLink.textContent = state.repo.repo;
-			elements.heroTitleLink.href = state.repo.webBase;
-			elements.heroSummary.innerHTML = `APT metadata is loaded directly from the current published repository content for <code>${escapeHtml(repoLabel)}</code>.`;
+			document.title = `${repoLabel} · PPA Repository`;
+			elements.heroTitle.textContent = repoLabel;
+			elements.aptRepoLink.href = state.repo.pagesUrl;
+			elements.githubRepoLink.href = state.repo.webBase;
 		}
 
 		function parseDeb822(text) {
@@ -1208,6 +1334,21 @@
 					size: Number(match[2]),
 					path: match[3]
 				}));
+		}
+
+		function hashString(text) {
+			let hash = 2166136261;
+			for (let index = 0; index < text.length; index += 1) {
+				hash ^= text.charCodeAt(index);
+				hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+			}
+			return (hash >>> 0).toString(16).padStart(8, "0");
+		}
+
+		function buildSnapshotFingerprint(releaseText, packagesText) {
+			const releasePart = String(releaseText || "").trim();
+			const packagesPart = String(packagesText || "").trim();
+			return hashString(`${releasePart}\n@@\n${packagesPart}`);
 		}
 
 		function normalizeMultiline(value) {
@@ -1418,10 +1559,12 @@
 				fetchOptionalText("./InRelease"),
 				fetchOptionalText("./Release")
 			]);
-			const parsedInRelease = parseRelease(stripInlineSignedText(inReleaseText));
+			const normalizedInRelease = stripInlineSignedText(inReleaseText);
+			const parsedInRelease = parseRelease(normalizedInRelease);
 			const parsedRelease = parseRelease(releaseText);
 			state.inRelease = parsedInRelease;
 			state.release = Object.keys(parsedInRelease).length ? parsedInRelease : parsedRelease;
+			state.releaseRawText = Object.keys(parsedInRelease).length ? normalizedInRelease : releaseText;
 			state.releaseIndexes = [
 				...parseReleaseIndexEntries(state.release?.SHA256 || "", "SHA256"),
 				...parseReleaseIndexEntries(state.release?.SHA1 || "", "SHA1"),
@@ -1453,6 +1596,7 @@
 
 		async function loadCurrentPackages() {
 			const packagesText = await fetchText("./Packages");
+			state.packagesRawText = packagesText;
 			state.currentPackages = parseDeb822(packagesText).map((entry) => normalizePackageEntry(entry, {
 				sha: "current",
 				htmlUrl: state.repo.branchWeb,
@@ -1848,10 +1992,18 @@
 				const isActive = selectedPackage && selectedPackage.name === pkg.name;
 				const latestVersion = latest?.version || "Unknown";
 				const artifactName = current?.filename || "-";
+				const homepageIcon = current?.homepage
+					? `<a class="icon-link" href="${escapeHtml(current.homepage)}" target="_blank" rel="noreferrer" title="Open homepage" aria-label="Open homepage">
+						<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5L12 4l9 7.5"></path><path d="M6.5 10.5V20h11V10.5"></path><path d="M10 20v-5h4v5"></path></svg>
+					</a>`
+					: "";
 				return `
 					<tr class="${isActive ? "is-active" : ""}" data-package-row="${escapeHtml(pkg.name)}" aria-selected="${isActive ? "true" : "false"}">
 						<td>
-							<div class="table-name">${escapeHtml(pkg.name)}</div>
+							<div class="table-name-row">
+								<div class="table-name">${escapeHtml(pkg.name)}</div>
+								${homepageIcon}
+							</div>
 							<div class="table-description">${escapeHtml(latest?.description || pkg.descriptions[0] || "No description")}</div>
 						</td>
 						<td class="version-cell"><span class="version-text" title="${escapeHtml(latestVersion)}">${escapeHtml(latestVersion)}</span></td>
@@ -1963,6 +2115,7 @@
 							<div class="detail-intro">${escapeHtml(current.description)}</div>
 						</div>
 						<div class="inline-list">
+							${current.homepage ? `<a class="icon-link" href="${escapeHtml(current.homepage)}" target="_blank" rel="noreferrer" title="Open homepage" aria-label="Open homepage"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5L12 4l9 7.5"></path><path d="M6.5 10.5V20h11V10.5"></path><path d="M10 20v-5h4v5"></path></svg></a>` : ""}
 							<span class="tag">${escapeHtml(versionEntry.version)}</span>
 							<span class="tag">${escapeHtml(current.architecture)}</span>
 							<span class="tag">${pkg.deploymentCount} deployments</span>
@@ -2045,10 +2198,12 @@
 
 		function renderDetail() {
 			const pkg = getSelectedPackage();
+			const isMobile = window.matchMedia("(max-width: 900px)").matches;
 			if (!pkg) {
 				elements.layout.classList.remove("has-selection");
 				elements.detailPanel.classList.add("is-hidden");
 				elements.detailPanel.setAttribute("aria-hidden", "true");
+				document.body.classList.remove("mobile-detail-open");
 				elements.detailCaption.textContent = "No package selected";
 				elements.detailRoot.innerHTML = '<div class="empty">The table stays unselected by default. Select any package row, or open <code>?pkg=package-name</code>. When only the package is provided, the newest version is shown automatically.</div>';
 				return;
@@ -2057,6 +2212,7 @@
 			elements.layout.classList.add("has-selection");
 			elements.detailPanel.classList.remove("is-hidden");
 			elements.detailPanel.setAttribute("aria-hidden", "false");
+			document.body.classList.toggle("mobile-detail-open", isMobile);
 
 			const preferredVersionEntry = getSelectedVersionEntry(pkg);
 			updateBuildArchitectureFilter(pkg);
@@ -2157,6 +2313,15 @@
 				render();
 			});
 
+			elements.detailBack.addEventListener("click", () => {
+				state.selectedName = "";
+				state.selectedVersion = "latest";
+				state.selectedBuildArchitecture = "";
+				state.activeTab = "overview";
+				updateUrlState();
+				render();
+			});
+
 			for (const button of elements.tabButtons) {
 				button.addEventListener("click", () => {
 					state.activeTab = button.dataset.tab || "overview";
@@ -2169,24 +2334,84 @@
 				applyUrlState();
 				render();
 			});
+
+			window.addEventListener("resize", () => {
+				renderDetail();
+			});
 		}
 
-		async function initialize(isInitialLoad = true) {
-			elements.refresh.disabled = true;
-			setStatus("Resolving repository from the current URL…");
-			elements.listRoot.innerHTML = '<div class="status">Loading remote repository state…</div>';
-			elements.detailRoot.innerHTML = '<div class="status">Loading current APT snapshot…</div>';
+		async function checkForBackgroundUpdates() {
+			if (state.backgroundUpdateInFlight) {
+				return;
+			}
+			state.backgroundUpdateInFlight = true;
+			try {
+				const [inReleaseText, releaseText, packagesText] = await Promise.all([
+					fetchOptionalText("./InRelease"),
+					fetchOptionalText("./Release"),
+					fetchOptionalText("./Packages")
+				]);
+				if (!packagesText) {
+					return;
+				}
+				const normalizedInRelease = stripInlineSignedText(inReleaseText);
+				const releaseForFingerprint = normalizedInRelease.trim() || releaseText;
+				const nextFingerprint = buildSnapshotFingerprint(releaseForFingerprint, packagesText);
+				if (state.lastSnapshotFingerprint && nextFingerprint !== state.lastSnapshotFingerprint) {
+					await initialize(false, { silent: true });
+				}
+			} catch (error) {
+				console.warn("Background update check failed.", error);
+			} finally {
+				state.backgroundUpdateInFlight = false;
+				updateBackgroundCountdownLine();
+			}
+		}
+
+		function ensureBackgroundUpdates() {
+			if (!state.backgroundCountdownTimerId) {
+				state.backgroundCountdownTimerId = window.setInterval(() => {
+					updateBackgroundCountdownLine();
+				}, 1000);
+			}
+
+			if (!state.backgroundUpdateTimerId) {
+				state.nextBackgroundUpdateAt = Date.now() + 60000;
+				updateBackgroundCountdownLine();
+				state.backgroundUpdateTimerId = window.setInterval(() => {
+					state.nextBackgroundUpdateAt = Date.now() + 60000;
+					updateBackgroundCountdownLine();
+					checkForBackgroundUpdates();
+				}, 60000);
+			}
+		}
+
+		async function initialize(isInitialLoad = true, options = {}) {
+			const silent = Boolean(options.silent);
+			if (!silent) {
+				elements.refresh.disabled = true;
+				setStatus("Resolving repository from the current URL…");
+				elements.listRoot.innerHTML = '<div class="status">Loading remote repository state…</div>';
+				elements.detailRoot.innerHTML = '<div class="status">Loading current APT snapshot…</div>';
+			}
 
 			try {
 				state.repo = null;
 				state.release = null;
 				state.inRelease = null;
 				state.releaseIndexes = [];
+				state.releaseRawText = "";
+				state.packagesRawText = "";
+				state.lastSnapshotFingerprint = "";
 				state.sources = [];
 				state.sourceByBinary = new Map();
 				state.currentPackages = [];
 				state.packages = [];
 				state.selectedBuildArchitecture = "";
+				if (!silent) {
+					state.nextBackgroundUpdateAt = 0;
+					updateBackgroundCountdownLine();
+				}
 
 				await resolveRepoContext();
 				renderRepoContext();
@@ -2195,23 +2420,35 @@
 				await loadRelease();
 				await loadSources();
 				await loadCurrentPackages();
+				state.lastSnapshotFingerprint = buildSnapshotFingerprint(state.releaseRawText, state.packagesRawText);
 
 				buildPackageIndex();
 				render();
 
 				const pkg = getSelectedPackage();
-				setStatus(`Loaded ${state.packages.length} packages from current APT metadata (${state.sources.length} source entries, ${state.releaseIndexes.length} release index checks parsed).${pkg ? ` Showing ${pkg.name}.` : ""}`);
+				if (!silent) {
+					setStatus(`Loaded ${state.packages.length} packages from current APT metadata (${state.sources.length} source entries, ${state.releaseIndexes.length} release index checks parsed).${pkg ? ` Showing ${pkg.name}.` : ""}`);
+				} else {
+					setStatus(`Background update applied. Loaded ${state.packages.length} packages.${pkg ? ` Showing ${pkg.name}.` : ""}`);
+				}
+
+				ensureBackgroundUpdates();
+				updateBackgroundCountdownLine();
 
 				if (isInitialLoad) {
 					updateUrlState(true);
 				}
 			} catch (error) {
 				console.error(error);
-				elements.listRoot.innerHTML = '<div class="warning">Failed to load package metadata from the remote repository.</div>';
-				elements.detailRoot.innerHTML = `<div class="warning">${escapeHtml(error.message || String(error))}</div>`;
+				if (!silent) {
+					elements.listRoot.innerHTML = '<div class="warning">Failed to load package metadata from the remote repository.</div>';
+					elements.detailRoot.innerHTML = `<div class="warning">${escapeHtml(error.message || String(error))}</div>`;
+				}
 				setStatus("Loading failed.");
 			} finally {
-				elements.refresh.disabled = false;
+				if (!silent) {
+					elements.refresh.disabled = false;
+				}
 			}
 		}
 
