@@ -1131,7 +1131,6 @@
 			updateCountdown: document.getElementById("update-countdown"),
 			packageCount: document.getElementById("package-count"),
 			stateSummary: document.getElementById("state-summary"),
-			clearSelection: document.getElementById("clear-selection"),
 			statPackages: document.getElementById("stat-packages"),
 			statLatest: document.getElementById("stat-latest"),
 			tabButtons: Array.from(document.querySelectorAll(".tab-button"))
@@ -2298,15 +2297,6 @@
 
 			elements.refresh.addEventListener("click", () => {
 				initialize(false);
-			});
-
-			elements.clearSelection.addEventListener("click", () => {
-				state.selectedName = "";
-				state.selectedVersion = "latest";
-				state.selectedBuildArchitecture = "";
-				state.activeTab = "overview";
-				updateUrlState();
-				render();
 			});
 
 			elements.detailBack.addEventListener("click", () => {
