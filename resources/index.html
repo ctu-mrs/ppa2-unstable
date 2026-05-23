@@ -970,7 +970,7 @@
 						<div class="detail-arch-picker">
 							<label for="detail-arch-filter">Build architecture</label>
 							<select id="detail-arch-filter" class="select detail-arch-filter">
-								<option value="auto">Build: latest available architecture</option>
+								<option value="" disabled>No architecture available</option>
 							</select>
 						</div>
 					</div>
@@ -999,7 +999,7 @@
 			packages: [],
 			selectedName: "",
 			selectedVersion: "latest",
-			selectedBuildArchitecture: "auto",
+			selectedBuildArchitecture: "",
 			activeTab: "overview",
 			filters: {
 				query: "",
@@ -1624,14 +1624,33 @@
 			return pkg.versions.find((entry) => entry.version === state.selectedVersion) || pkg.versions[0] || null;
 		}
 
-		function getSelectedBuildEntry(versionEntry) {
-			if (!versionEntry || !Array.isArray(versionEntry.entries) || versionEntry.entries.length === 0) {
+		function getSelectedBuildEntry(pkg, preferredVersionEntry) {
+			if (!pkg || !Array.isArray(pkg.currentEntries) || pkg.currentEntries.length === 0) {
 				return null;
 			}
-			if (!state.selectedBuildArchitecture || state.selectedBuildArchitecture === "auto") {
-				return versionEntry.entries[0];
+
+			const sortedEntries = [...pkg.currentEntries].sort((left, right) => new Date(right.deployedAt) - new Date(left.deployedAt));
+			let filtered = sortedEntries;
+
+			if (state.selectedBuildArchitecture) {
+				filtered = sortedEntries.filter((entry) => entry.architecture === state.selectedBuildArchitecture);
 			}
-			return versionEntry.entries.find((entry) => entry.architecture === state.selectedBuildArchitecture) || versionEntry.entries[0];
+
+			if (!filtered.length) {
+				state.selectedBuildArchitecture = sortedEntries[0]?.architecture || "";
+				filtered = state.selectedBuildArchitecture
+					? sortedEntries.filter((entry) => entry.architecture === state.selectedBuildArchitecture)
+					: sortedEntries;
+			}
+
+			if (preferredVersionEntry) {
+				const sameVersion = filtered.filter((entry) => entry.version === preferredVersionEntry.version);
+				if (sameVersion.length) {
+					return sameVersion[0];
+				}
+			}
+
+			return filtered[0] || null;
 		}
 
 		function getFilteredPackages() {
@@ -1738,6 +1757,7 @@
 			if (!state.packages.length) {
 				state.selectedName = "";
 				state.selectedVersion = "latest";
+				state.selectedBuildArchitecture = "";
 				state.activeTab = "overview";
 				return;
 			}
@@ -1749,6 +1769,7 @@
 			const pkg = getSelectedPackage();
 			if (!pkg) {
 				state.selectedVersion = "latest";
+				state.selectedBuildArchitecture = "";
 				state.activeTab = "overview";
 				return;
 			}
@@ -1771,24 +1792,23 @@
 			elements.versionFilter.value = state.selectedVersion === "latest" ? "latest" : state.selectedVersion;
 		}
 
-		function updateBuildArchitectureFilter(versionEntry) {
-			if (!versionEntry || !Array.isArray(versionEntry.entries) || versionEntry.entries.length === 0) {
-				elements.detailArchFilter.innerHTML = '<option value="auto">Build: latest available architecture</option>';
-				elements.detailArchFilter.value = "auto";
-				state.selectedBuildArchitecture = "auto";
+		function updateBuildArchitectureFilter(pkg) {
+			if (!pkg || !Array.isArray(pkg.currentEntries) || pkg.currentEntries.length === 0) {
+				elements.detailArchFilter.innerHTML = '<option value="" disabled>No architecture available</option>';
+				elements.detailArchFilter.value = "";
+				state.selectedBuildArchitecture = "";
 				return;
 			}
 
-			const architectures = Array.from(new Set(versionEntry.entries.map((entry) => entry.architecture))).sort((left, right) => left.localeCompare(right));
-			elements.detailArchFilter.innerHTML = [
-				'<option value="auto">Build: latest available architecture</option>',
-				...architectures.map((architecture) => `<option value="${escapeHtml(architecture)}">Build: ${escapeHtml(architecture)}</option>`)
-			].join("");
+			const architectures = Array.from(new Set(pkg.currentEntries.map((entry) => entry.architecture))).sort((left, right) => left.localeCompare(right));
+			elements.detailArchFilter.innerHTML = architectures
+				.map((architecture) => `<option value="${escapeHtml(architecture)}">Build: ${escapeHtml(architecture)}</option>`)
+				.join("");
 
-			if (state.selectedBuildArchitecture !== "auto" && !architectures.includes(state.selectedBuildArchitecture)) {
-				state.selectedBuildArchitecture = "auto";
+			if (!state.selectedBuildArchitecture || !architectures.includes(state.selectedBuildArchitecture)) {
+				state.selectedBuildArchitecture = architectures[0] || "";
 			}
-			elements.detailArchFilter.value = state.selectedBuildArchitecture || "auto";
+			elements.detailArchFilter.value = state.selectedBuildArchitecture;
 		}
 
 		function renderStateSummary(filteredPackages) {
@@ -1887,7 +1907,7 @@
 					}
 					state.selectedName = row.dataset.packageRow || "";
 					state.selectedVersion = "latest";
-					state.selectedBuildArchitecture = "auto";
+					state.selectedBuildArchitecture = "";
 					state.activeTab = "overview";
 					updateUrlState();
 					render();
@@ -1900,7 +1920,7 @@
 					event.preventDefault();
 					state.selectedName = row.dataset.packageRow || "";
 					state.selectedVersion = "latest";
-					state.selectedBuildArchitecture = "auto";
+					state.selectedBuildArchitecture = "";
 					state.activeTab = "overview";
 					updateUrlState();
 					render();
@@ -2038,9 +2058,10 @@
 			elements.detailPanel.classList.remove("is-hidden");
 			elements.detailPanel.setAttribute("aria-hidden", "false");
 
-			const versionEntry = getSelectedVersionEntry(pkg);
-			updateBuildArchitectureFilter(versionEntry);
-			const current = getSelectedBuildEntry(versionEntry) || pkg.latestEntry;
+			const preferredVersionEntry = getSelectedVersionEntry(pkg);
+			updateBuildArchitectureFilter(pkg);
+			const current = getSelectedBuildEntry(pkg, preferredVersionEntry) || pkg.latestEntry;
+			const versionEntry = pkg.versions.find((entry) => entry.version === current?.version) || preferredVersionEntry;
 			if (!versionEntry || !current) {
 				elements.detailRoot.innerHTML = '<div class="warning">Selected package has no resolved entries.</div>';
 				return;
@@ -2069,6 +2090,7 @@
 					event.preventDefault();
 					state.selectedName = dependencyLink.dataset.dependencyLink || "";
 					state.selectedVersion = "latest";
+					state.selectedBuildArchitecture = "";
 					state.activeTab = "overview";
 					updateUrlState();
 					render();
@@ -2112,13 +2134,13 @@
 
 			elements.versionFilter.addEventListener("change", (event) => {
 				state.selectedVersion = event.target.value || "latest";
-				state.selectedBuildArchitecture = "auto";
+				state.selectedBuildArchitecture = "";
 				updateUrlState();
 				render();
 			});
 
 			elements.detailArchFilter.addEventListener("change", (event) => {
-				state.selectedBuildArchitecture = event.target.value || "auto";
+				state.selectedBuildArchitecture = event.target.value || "";
 				render();
 			});
 
@@ -2129,7 +2151,7 @@
 			elements.clearSelection.addEventListener("click", () => {
 				state.selectedName = "";
 				state.selectedVersion = "latest";
-				state.selectedBuildArchitecture = "auto";
+				state.selectedBuildArchitecture = "";
 				state.activeTab = "overview";
 				updateUrlState();
 				render();
@@ -2164,7 +2186,7 @@
 				state.sourceByBinary = new Map();
 				state.currentPackages = [];
 				state.packages = [];
-				state.selectedBuildArchitecture = "auto";
+				state.selectedBuildArchitecture = "";
 
 				await resolveRepoContext();
 				renderRepoContext();
