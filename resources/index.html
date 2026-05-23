@@ -53,7 +53,6 @@
 		button *,
 		a,
 		[role="button"],
-		[data-package-link],
 		[data-dependency-link],
 		[data-version-link] {
 			cursor: pointer;
@@ -159,6 +158,17 @@
 			line-height: 0.96;
 			letter-spacing: -0.05em;
 		}
+		.hero-title-link {
+			text-decoration: none;
+			border-bottom: 2px solid transparent;
+			transition: border-color 120ms ease;
+		}
+
+		.hero-title-link:hover,
+		.hero-title-link:focus-visible {
+			border-bottom-color: rgba(15, 118, 110, 0.45);
+			outline: none;
+		}
 
 		.hero p {
 			margin: 0;
@@ -226,7 +236,7 @@
 
 		.hero-metrics {
 			display: grid;
-			grid-template-columns: repeat(2, minmax(0, 1fr));
+			grid-template-columns: minmax(130px, 0.85fr) minmax(260px, 1.15fr);
 			gap: 10px;
 		}
 
@@ -248,6 +258,9 @@
 
 		.metric-card.metric-time {
 			background: linear-gradient(140deg, rgba(255, 250, 245, 0.85), rgba(255, 255, 255, 0.92));
+		}
+		.metric-card.metric-time .metric-label {
+			white-space: nowrap;
 		}
 
 		.metric-label {
@@ -485,8 +498,16 @@
 		table {
 			width: 100%;
 			border-collapse: collapse;
-			min-width: 980px;
+			table-layout: fixed;
+			min-width: 900px;
 		}
+
+		.col-package { width: 29%; }
+		.col-version { width: 20%; }
+		.col-arch { width: 13%; }
+		.col-maintainer { width: 16%; }
+		.col-deploy { width: 12%; }
+		.col-artifact { width: 10%; }
 
 		.version-cell {
 			max-width: 240px;
@@ -498,6 +519,20 @@
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			font-weight: 700;
+		}
+
+		.arch-cell,
+		.maintainer-cell,
+		.artifact-cell {
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.artifact-text {
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 
 		thead th {
@@ -715,8 +750,8 @@
 				grid-template-columns: 1fr;
 			}
 
-			.repo-links {
-				justify-content: flex-start;
+			.hero-metrics {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
 			}
 		}
 
@@ -813,7 +848,7 @@
 			}
 
 			table {
-				min-width: 680px;
+				min-width: 720px;
 			}
 		}
 	</style>
@@ -825,16 +860,13 @@
 				<div class="hero-top">
 					<div class="hero-intro">
 						<div class="eyebrow">APT Repository</div>
-						<h1 id="hero-title">PPA Repository</h1>
+						<h1><a id="hero-title-link" class="hero-title-link" href="#" target="_blank" rel="noreferrer">PPA Repository</a></h1>
 						<p id="hero-summary">
 							This page derives the backing GitHub repository from the current URL, loads the APT metadata from the current directory,
 							and reconstructs deployment history from the Pages branch automatically.
 						</p>
 					</div>
 					<div class="hero-corner">
-						<div class="repo-links" id="repo-links">
-							<span class="tag">Resolving repository context…</span>
-						</div>
 						<div class="hero-metrics">
 							<div class="metric-card metric-count">
 								<div class="metric-label">Packages</div>
@@ -933,9 +965,8 @@
 
 		const elements = {
 			layout: document.getElementById("workspace-layout"),
-			heroTitle: document.getElementById("hero-title"),
+			heroTitleLink: document.getElementById("hero-title-link"),
 			heroSummary: document.getElementById("hero-summary"),
-			repoLinks: document.getElementById("repo-links"),
 			search: document.getElementById("search"),
 			archFilter: document.getElementById("arch-filter"),
 			sortFilter: document.getElementById("sort-filter"),
@@ -1053,14 +1084,9 @@
 
 			const repoLabel = `${state.repo.owner}/${state.repo.repo}`;
 			document.title = `${state.repo.repo} · PPA Repository`;
-			elements.heroTitle.textContent = state.repo.repo;
+			elements.heroTitleLink.textContent = state.repo.repo;
+			elements.heroTitleLink.href = state.repo.webBase;
 			elements.heroSummary.innerHTML = `APT metadata is loaded directly from the current published repository content for <code>${escapeHtml(repoLabel)}</code>.`;
-			elements.repoLinks.innerHTML = [
-				`<a class="chip-link" href="${escapeHtml(state.repo.webBase)}" target="_blank" rel="noreferrer">repository</a>`,
-				`<a class="chip-link" href="${escapeHtml(state.repo.branchWeb)}" target="_blank" rel="noreferrer">${escapeHtml(state.repo.pagesBranch)} branch</a>`,
-				`<a class="chip-link" href="${escapeHtml(state.repo.debsWeb)}" target="_blank" rel="noreferrer">debs branch</a>`,
-				`<a class="chip-link" href="${escapeHtml(state.repo.pagesUrl)}" target="_blank" rel="noreferrer">published site</a>`
-			].join("");
 		}
 
 		function parseDeb822(text) {
@@ -1724,6 +1750,7 @@
 				const current = pkg.currentEntries[0] || latest;
 				const isActive = selectedPackage && selectedPackage.name === pkg.name;
 				const latestVersion = latest?.version || "Unknown";
+				const artifactName = current?.filename || "-";
 				return `
 					<tr class="${isActive ? "is-active" : ""}" data-package-row="${escapeHtml(pkg.name)}" aria-selected="${isActive ? "true" : "false"}">
 						<td>
@@ -1731,20 +1758,27 @@
 							<div class="table-description">${escapeHtml(latest?.description || pkg.descriptions[0] || "No description")}</div>
 						</td>
 						<td class="version-cell"><span class="version-text" title="${escapeHtml(latestVersion)}">${escapeHtml(latestVersion)}</span></td>
-						<td>${escapeHtml(pkg.architectures.join(", "))}</td>
-						<td>${escapeHtml(current?.maintainer || pkg.maintainers[0] || "Unknown")}</td>
+						<td class="arch-cell" title="${escapeHtml(pkg.architectures.join(", "))}">${escapeHtml(pkg.architectures.join(", "))}</td>
+						<td class="maintainer-cell" title="${escapeHtml(current?.maintainer || pkg.maintainers[0] || "Unknown")}">${escapeHtml(current?.maintainer || pkg.maintainers[0] || "Unknown")}</td>
 						<td>
 							<div>${escapeHtml(formatDate(pkg.latestDeployedAt))}</div>
 							<div class="hint">${escapeHtml(formatRelativeDate(pkg.latestDeployedAt))}</div>
 						</td>
-						<td>${escapeHtml(current?.filename || "-")}</td>
-						<td><a class="row-link" href="${escapeHtml(buildPackageUrl(pkg.name, "latest", state.activeTab))}" data-package-link="${escapeHtml(pkg.name)}">View</a></td>
+						<td class="artifact-cell"><span class="artifact-text" title="${escapeHtml(artifactName)}">${escapeHtml(artifactName)}</span></td>
 					</tr>
 				`;
 			}).join("");
 
 			elements.listRoot.innerHTML = `
 				<table aria-label="All packages">
+					<colgroup>
+						<col class="col-package">
+						<col class="col-version">
+						<col class="col-arch">
+						<col class="col-maintainer">
+						<col class="col-deploy">
+						<col class="col-artifact">
+					</colgroup>
 					<thead>
 						<tr>
 							<th><button class="table-sort ${state.filters.sort === "name" ? "is-active" : ""}" data-sort="name" type="button">Package</button></th>
@@ -1753,7 +1787,6 @@
 							<th>Maintainer</th>
 							<th><button class="table-sort ${state.filters.sort === "latest" ? "is-active" : ""}" data-sort="latest" type="button">Latest Deploy</button></th>
 							<th>Artifact</th>
-							<th>Detail</th>
 						</tr>
 					</thead>
 					<tbody>${rows}</tbody>
@@ -1764,17 +1797,6 @@
 				button.addEventListener("click", () => {
 					state.filters.sort = button.dataset.sort || "latest";
 					elements.sortFilter.value = state.filters.sort;
-					updateUrlState();
-					render();
-				});
-			}
-
-			for (const link of elements.listRoot.querySelectorAll("[data-package-link]")) {
-				link.addEventListener("click", (event) => {
-					event.preventDefault();
-					state.selectedName = link.dataset.packageLink || "";
-					state.selectedVersion = "latest";
-					state.activeTab = "overview";
 					updateUrlState();
 					render();
 				});
