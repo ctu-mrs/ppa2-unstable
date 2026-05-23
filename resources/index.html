@@ -1165,6 +1165,11 @@
 			elements.updateCountdown.textContent = `Next refresh in ${seconds}s`;
 		}
 
+		function restartBackgroundCountdown() {
+			state.nextBackgroundUpdateAt = Date.now() + 60000;
+			updateBackgroundCountdownLine();
+		}
+
 		function getQueryOverrides() {
 			const params = new URLSearchParams(location.search);
 			return {
@@ -2362,11 +2367,9 @@
 			}
 
 			if (!state.backgroundUpdateTimerId) {
-				state.nextBackgroundUpdateAt = Date.now() + 60000;
-				updateBackgroundCountdownLine();
+				restartBackgroundCountdown();
 				state.backgroundUpdateTimerId = window.setInterval(() => {
-					state.nextBackgroundUpdateAt = Date.now() + 60000;
-					updateBackgroundCountdownLine();
+					restartBackgroundCountdown();
 					checkForBackgroundUpdates();
 				}, 60000);
 			}
@@ -2410,6 +2413,7 @@
 
 				buildPackageIndex();
 				render();
+				restartBackgroundCountdown();
 
 				const pkg = getSelectedPackage();
 				if (!silent) {
@@ -2419,7 +2423,6 @@
 				}
 
 				ensureBackgroundUpdates();
-				updateBackgroundCountdownLine();
 
 				if (isInitialLoad) {
 					updateUrlState(true);
