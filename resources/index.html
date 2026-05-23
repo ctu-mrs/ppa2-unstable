@@ -344,6 +344,26 @@
 			align-items: center;
 		}
 
+		.detail-arch-picker {
+			display: grid;
+			gap: 6px;
+			margin-top: 10px;
+			max-width: 340px;
+		}
+
+		.detail-arch-picker label {
+			font-size: 0.74rem;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			color: var(--muted);
+		}
+
+		.detail-arch-filter {
+			min-height: 40px;
+			padding: 8px 10px;
+			border-radius: 12px;
+		}
+
 		.button.button-secondary {
 			background: rgba(255, 255, 255, 0.85);
 			font-weight: 600;
@@ -449,6 +469,11 @@
 		.detail-panel .panel-body {
 			overflow: auto;
 			min-height: 0;
+		}
+
+		.detail-panel.panel,
+		.detail-panel .panel-head {
+			backdrop-filter: none;
 		}
 
 		.panel {
@@ -655,6 +680,20 @@
 		.control-table-wrap,
 		.dependency-grid {
 			margin-top: 16px;
+		}
+
+		.relation-lines {
+			display: grid;
+			gap: 6px;
+		}
+
+		.relation-line {
+			padding: 6px 8px;
+			border-radius: 10px;
+			background: rgba(255, 255, 255, 0.72);
+			border: 1px solid var(--line);
+			font-size: 0.88rem;
+			line-height: 1.45;
 		}
 
 		.description {
@@ -928,6 +967,12 @@
 					<div>
 						<h3>Package Detail</h3>
 						<div class="hint" id="detail-caption">Select a package or open ?pkg=name to see newest details</div>
+						<div class="detail-arch-picker">
+							<label for="detail-arch-filter">Build architecture</label>
+							<select id="detail-arch-filter" class="select detail-arch-filter">
+								<option value="auto">Build: latest available architecture</option>
+							</select>
+						</div>
 					</div>
 					<div class="view-tabs">
 						<button type="button" class="tab-button is-active" data-tab="overview">Overview</button>
@@ -954,6 +999,7 @@
 			packages: [],
 			selectedName: "",
 			selectedVersion: "latest",
+			selectedBuildArchitecture: "auto",
 			activeTab: "overview",
 			filters: {
 				query: "",
@@ -976,6 +1022,7 @@
 			detailPanel: document.getElementById("detail-panel"),
 			detailRoot: document.getElementById("detail-root"),
 			detailCaption: document.getElementById("detail-caption"),
+			detailArchFilter: document.getElementById("detail-arch-filter"),
 			statusLine: document.getElementById("status-line"),
 			packageCount: document.getElementById("package-count"),
 			stateSummary: document.getElementById("state-summary"),
@@ -1577,6 +1624,16 @@
 			return pkg.versions.find((entry) => entry.version === state.selectedVersion) || pkg.versions[0] || null;
 		}
 
+		function getSelectedBuildEntry(versionEntry) {
+			if (!versionEntry || !Array.isArray(versionEntry.entries) || versionEntry.entries.length === 0) {
+				return null;
+			}
+			if (!state.selectedBuildArchitecture || state.selectedBuildArchitecture === "auto") {
+				return versionEntry.entries[0];
+			}
+			return versionEntry.entries.find((entry) => entry.architecture === state.selectedBuildArchitecture) || versionEntry.entries[0];
+		}
+
 		function getFilteredPackages() {
 			const query = state.filters.query.trim().toLowerCase();
 			const architecture = state.filters.architecture;
@@ -1714,6 +1771,26 @@
 			elements.versionFilter.value = state.selectedVersion === "latest" ? "latest" : state.selectedVersion;
 		}
 
+		function updateBuildArchitectureFilter(versionEntry) {
+			if (!versionEntry || !Array.isArray(versionEntry.entries) || versionEntry.entries.length === 0) {
+				elements.detailArchFilter.innerHTML = '<option value="auto">Build: latest available architecture</option>';
+				elements.detailArchFilter.value = "auto";
+				state.selectedBuildArchitecture = "auto";
+				return;
+			}
+
+			const architectures = Array.from(new Set(versionEntry.entries.map((entry) => entry.architecture))).sort((left, right) => left.localeCompare(right));
+			elements.detailArchFilter.innerHTML = [
+				'<option value="auto">Build: latest available architecture</option>',
+				...architectures.map((architecture) => `<option value="${escapeHtml(architecture)}">Build: ${escapeHtml(architecture)}</option>`)
+			].join("");
+
+			if (state.selectedBuildArchitecture !== "auto" && !architectures.includes(state.selectedBuildArchitecture)) {
+				state.selectedBuildArchitecture = "auto";
+			}
+			elements.detailArchFilter.value = state.selectedBuildArchitecture || "auto";
+		}
+
 		function renderStateSummary(filteredPackages) {
 			const pills = [
 				`<span class="state-pill">shown=${filteredPackages.length}</span>`,
@@ -1810,6 +1887,7 @@
 					}
 					state.selectedName = row.dataset.packageRow || "";
 					state.selectedVersion = "latest";
+					state.selectedBuildArchitecture = "auto";
 					state.activeTab = "overview";
 					updateUrlState();
 					render();
@@ -1822,6 +1900,7 @@
 					event.preventDefault();
 					state.selectedName = row.dataset.packageRow || "";
 					state.selectedVersion = "latest";
+					state.selectedBuildArchitecture = "auto";
 					state.activeTab = "overview";
 					updateUrlState();
 					render();
@@ -1841,15 +1920,20 @@
 				}).join("")
 				: '<span class="muted">No dependency packages declared.</span>';
 
-			const relationSummary = [
-				current.preDepends ? `Pre-Depends: ${current.preDepends}` : "",
-				current.recommends ? `Recommends: ${current.recommends}` : "",
-				current.suggests ? `Suggests: ${current.suggests}` : "",
-				current.provides ? `Provides: ${current.provides}` : "",
-				current.conflicts ? `Conflicts: ${current.conflicts}` : "",
-				current.breaks ? `Breaks: ${current.breaks}` : "",
-				current.replaces ? `Replaces: ${current.replaces}` : ""
-			].filter(Boolean);
+			const relationLines = [
+				{ label: "Pre-Depends", value: current.preDepends },
+				{ label: "Recommends", value: current.recommends },
+				{ label: "Suggests", value: current.suggests },
+				{ label: "Provides", value: current.provides },
+				{ label: "Conflicts", value: current.conflicts },
+				{ label: "Breaks", value: current.breaks },
+				{ label: "Replaces", value: current.replaces }
+			].flatMap((item) => String(item.value || "")
+				.split("|")
+				.map((piece) => piece.trim())
+				.filter(Boolean)
+				.map((piece) => `${item.label}: ${piece}`)
+			);
 
 			return `
 				<div class="detail-hero">
@@ -1867,7 +1951,6 @@
 
 					<div class="detail-actions">
 						<a class="action-link" href="${escapeHtml(current.historicalDownloadUrl)}" target="_blank" rel="noreferrer">Download selected artifact</a>
-						${current.homepage ? `<a class="action-link" href="${escapeHtml(current.homepage)}" target="_blank" rel="noreferrer">Homepage</a>` : ""}
 					</div>
 				</div>
 
@@ -1904,7 +1987,10 @@
 					</div>
 					<div class="dependency-block">
 						<strong>APT Relations</strong>
-						<div class="control-value">${escapeHtml(relationSummary.join(" | ") || "No additional relation fields in this package entry.")}</div>
+						<div class="relation-lines">${relationLines.length
+							? relationLines.map((line) => `<div class="relation-line">${escapeHtml(line)}</div>`).join("")
+							: '<div class="control-value">No additional relation fields in this package entry.</div>'
+						}</div>
 					</div>
 					<div class="dependency-block">
 						<strong>Repository Index Insight</strong>
@@ -1953,7 +2039,8 @@
 			elements.detailPanel.setAttribute("aria-hidden", "false");
 
 			const versionEntry = getSelectedVersionEntry(pkg);
-			const current = versionEntry?.entries[0] || pkg.latestEntry;
+			updateBuildArchitectureFilter(versionEntry);
+			const current = getSelectedBuildEntry(versionEntry) || pkg.latestEntry;
 			if (!versionEntry || !current) {
 				elements.detailRoot.innerHTML = '<div class="warning">Selected package has no resolved entries.</div>';
 				return;
@@ -2025,7 +2112,13 @@
 
 			elements.versionFilter.addEventListener("change", (event) => {
 				state.selectedVersion = event.target.value || "latest";
+				state.selectedBuildArchitecture = "auto";
 				updateUrlState();
+				render();
+			});
+
+			elements.detailArchFilter.addEventListener("change", (event) => {
+				state.selectedBuildArchitecture = event.target.value || "auto";
 				render();
 			});
 
@@ -2036,6 +2129,7 @@
 			elements.clearSelection.addEventListener("click", () => {
 				state.selectedName = "";
 				state.selectedVersion = "latest";
+				state.selectedBuildArchitecture = "auto";
 				state.activeTab = "overview";
 				updateUrlState();
 				render();
@@ -2070,6 +2164,7 @@
 				state.sourceByBinary = new Map();
 				state.currentPackages = [];
 				state.packages = [];
+				state.selectedBuildArchitecture = "auto";
 
 				await resolveRepoContext();
 				renderRepoContext();
