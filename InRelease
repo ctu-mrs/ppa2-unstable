@@ -1,0 +1,39 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Date: Tue, 15 Sep 2026 22:55:35 +0000
+Label: unstable
+Origin: ctu-mrs
+MD5Sum:
+ 8bd4ba9ed3568e28039d597bcd68dcf0           213843 Packages
+ 2779b5f42a54db8537b2b7944b3f578d            38482 Packages.gz
+ e0df54882d3a33268e5072b246e0fb7f               70 Release
+SHA1:
+ 428fafd52e350e433dae5b78817c84b27a26d869           213843 Packages
+ a6651a90135df022926128f1b0a37f491a3a428d            38482 Packages.gz
+ a6c8e39fd19ec7db7f5603b6e63c33dff6b6264b               70 Release
+SHA256:
+ a3a07912eb3e35ee32f5dc38fbda3b648b8ec2a9bf3ea3422ce616f4e194436a           213843 Packages
+ 875a19be079d24e21488e5b2a4b730b0735a84702812e55453d0c2e1e6cbe945            38482 Packages.gz
+ 73d2496f321e1d18bd282d3fc3b0dbd4d0409febfb345f9d173dcdd08afa2be8               70 Release
+SHA512:
+ 14daae3f6e1b4d2304037917a89d996e88dd1bf1ed137d5334739b86ff52374de44b6a078ad342f1ea6763640fea703607c8e9ef86aa0b5787a1f5d51a4d34a3           213843 Packages
+ 5090e8ac745e99cef4fab585d612c6b29f956e01c55584ea1379c4f0dbc7c69b8b19dad5a2e069ba9bafbd9c0cf8743325e9ed49376e8b128f1e03454bbf81e7            38482 Packages.gz
+ ea1534eda8b0552861f559ec26c3ee9cbbc5427b29256603565d57419d6485516ecbe36344e98568292c22ccd59fac3a45c3c14f061b6a7bdc63e5bf2af53d10               70 Release
+-----BEGIN PGP SIGNATURE-----
+
+iQJLBAEBCgA1FiEEb03deYxGy/GR9vy/sp02ABwZjREFAmqpzOcXHHRvbWFzLmJh
+Y2FAZmVsLmN2dXQuY3oACgkQsp02ABwZjRGc0A//bONYRTnQM6C5ZMq5I0ydrPZM
+jRkT5z4Zogvcd4dPCNx3GvoOa///pBhalGOjcxSeIg+D+7m6QSfmbVpndloRcnPR
+ce43rGCS8vtemGk5RVrWcHHtB1SfmkY4DI5RfBnrmvVEUuIOvHV0hNByCTw9PuEb
++jeQ1GRLQTjHrAacuFWxEKx5uoveFBG+UCM+eoy0n7yeG0TiBREXFV4cbmv/uEv6
+3wRW3IxdfqTBhqV+J5xotD+39oC7HINkws3nWlTo/ms0vF8C3K+hMCpsZQ4UxxNO
+N1OCuPsk2XvIWSL4Vw9YwOsuYD9NTlaUnQSAOPkVS4g6LkU20bws7vm1QlDGzTGW
+iiS8LjfiAfhur3yKsMMMO4qhtK0SOcobOQ4AkI+Q65/xVh/IlyZKcgeOHgH0fQWU
+8A8ojttoBuEQvaeYHztWTISZU5qDA5XGcZy/fm8N3Zn3cEbJXEawBl+/4ujBRZXm
+6SvHGmXVLIAC5LEhDR0ikhe1Bpieez4J7Gunoph5MdCSIuiP/T+Q4p2MDDjukQTy
+LBvi5exDA+g/e+F40pjfmBYOn1jiH3c591xPJNcpiKVGUsik1/hiiR7JDp5AJV68
+yrTjxuJWgOiX31YeauFq9c1qwPTrD9Jo9hM/UrsdKkfNhxP+maOLgij0m0TAmzdH
+Marncco1SDpQ3HfCyPA=
+=T2ig
+-----END PGP SIGNATURE-----
