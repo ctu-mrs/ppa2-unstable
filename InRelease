@@ -1,0 +1,39 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Date: Sat, 19 Sep 2026 18:40:21 +0000
+Label: unstable
+Origin: ctu-mrs
+MD5Sum:
+ e84a4c23d33a6551524aa89a0aac907c           213843 Packages
+ b5f7f2f926ededc3aec2c10bfe10736f            38796 Packages.gz
+ daf4e415dfdc571820ebe273698edbed               70 Release
+SHA1:
+ 7a537834841b763d4c61984bd064ea5c166a069f           213843 Packages
+ 0956238f822f3b548c2e9895ba826dfb3169c711            38796 Packages.gz
+ c31d4e7441f75484a54d7bf323516f32a4e9dc6d               70 Release
+SHA256:
+ eb474228cb3dd0fb887f1b38aeae62f29dea134ef930832dd079121e0a0e92ec           213843 Packages
+ a7dcc99fd7477e6c9dc8eedbc9fed58c6399640fe6efe020841c786e06dec51b            38796 Packages.gz
+ 0d51faa1ed3ea4ee22311539e4fd4ec86529b96401609a149c5f6d42b8282978               70 Release
+SHA512:
+ ee7022560aa2fe9dd772163aba589c6ff91a1d2dc4bf6c57d3e2439098c922cd54dd95eca5e74dd26a908e015b9a08328288f3624e4f8a28e393664274e5df10           213843 Packages
+ c11b672772c0bb5737180a8918759eeed4f39f7f2caa50d112160e6fe3a07f214d2d9639a5670271ebc2895ece152e01a2c6a7e3690315f4e086fbbe3fb156a5            38796 Packages.gz
+ 513450b11b87361b6fbe43cab2e8fc8737ea3db7e203415a4412ced06faf0394362fa30da57e17c9c2016d0990434f9ca26773d18867e64feaacf30a33aa68b7               70 Release
+-----BEGIN PGP SIGNATURE-----
+
+iQJLBAEBCgA1FiEEb03deYxGy/GR9vy/sp02ABwZjREFAmqu1xUXHHRvbWFzLmJh
+Y2FAZmVsLmN2dXQuY3oACgkQsp02ABwZjRGQohAAmy1d6/QWbi7jgWqjW+nZ70rG
+kHkYHnZ/sBAjaNApChBPZ/dREpV+lRkIRPFK75autZ56HnYdpv2kfCW9IrVGrOPn
+sfdInGxYUge4IcguTYbohW0RM2Hz3G4Y80/TrVUzJqTIANRqU+E/HywSGifjGO6+
+Sg3QIUfKqCkJUSd86BlPZPG+cLAq1zEEnvG3n00BEVM6/9YjaJPKs6d3DyesOblc
+bXoQ6ySY1f35uoHmF/nOsHMqGgNt2XZSTVllA2lSxBDX+qEHu07Al8+U6ZH815it
+AxbmFjznhLXHxovCXzIdlh3DDGdlwtb0E1g9nenF+xwhIeJ8VPemo0Bu5zMViTLf
+iA/CzjWpj6tvQbMQ5zI1yYAvEwIR/b3djBwxWqDKNekn2sYckH/xim/pOpErEKOm
+WPbbkGwn8t0BxRi8JH5IzSzr9xvp7gf+PWfl1hpEVEOMeznDyNXqDGh5W4UfO3Ut
+jkg638pqxc5q/ejOi4/VScLvxQr3EvuInpiRWtsFj8MJzRA1U8JAtnc+YtmhRRZu
+uVqiYr3CEzthLCfyF+DwVTsufvD8kIKkn6Y2dIeehc6V0A3e2VuFB7T6DNQ1CCO7
+b94MTwxfYRpziVg18bcNwozEscSQJtgoD6ygYL5HdmH7yx2lbf6+1q/xA1dHeYWI
+iHHpDSzLQQMvpw9qyyM=
+=2d9V
+-----END PGP SIGNATURE-----
