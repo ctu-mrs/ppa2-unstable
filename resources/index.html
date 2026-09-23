@@ -585,14 +585,11 @@
 		.col-build { width: 13%; }
 		.col-artifact { width: 11%; }
 
-		.version-cell {
-			max-width: 240px;
-		}
-
 		.version-summary {
 			display: grid;
 			gap: 2px;
 			min-width: 0;
+			width: 100%;
 		}
 
 		.version-summary-line {
@@ -616,14 +613,10 @@
 			flex: 0 0 auto;
 		}
 
-		.maintainer-cell,
-		.artifact-cell {
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
-
+		.maintainer-text,
 		.artifact-text {
 			display: block;
+			min-width: 0;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
@@ -678,6 +671,10 @@
 			font-weight: 800;
 			letter-spacing: -0.02em;
 			margin-bottom: 4px;
+			min-width: 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 
 		.table-name-row {
@@ -731,7 +728,9 @@
 		}
 
 		.table-description {
-			max-width: 420px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 
 		.detail-hero {
@@ -987,10 +986,6 @@
 
 			.hero-metrics {
 				grid-template-columns: 1fr;
-			}
-
-			.version-cell {
-				max-width: 170px;
 			}
 
 			.detail-build-pickers {
@@ -2254,11 +2249,7 @@
 			}
 			return `<div class="version-summary">${Array.from(groups.entries())
 				.sort(([left], [right]) => compareDebianVersions(right, left))
-				.map(([version, architectures]) => {
-					const rosBuild = version.match(/^(.+?)-0[^.]+\.(\d{8}\.\d{6})~/);
-					const label = rosBuild ? `${rosBuild[1]} · ${rosBuild[2]}…` : version;
-					return `<div class="version-summary-line" title="${escapeHtml(`${version} (${architectures.join(", ")})`)}"><strong>${escapeHtml(label)}</strong><span class="version-summary-arch">(${escapeHtml(architectures.join(", "))})</span></div>`;
-				})
+				.map(([version, architectures]) => `<div class="version-summary-line" title="${escapeHtml(`${version} (${architectures.join(", ")})`)}"><strong>${escapeHtml(version)}</strong><span class="version-summary-arch">(${escapeHtml(architectures.join(", "))})</span></div>`)
 				.join("")}</div>`;
 		}
 
@@ -2281,6 +2272,8 @@
 				const buildDateEntry = pkg.newestEntries.find((entry) => entry.buildDateRaw) || null;
 				const isActive = selectedPackage && selectedPackage.name === pkg.name;
 				const artifactName = current?.filename || "-";
+				const description = latest?.description || pkg.descriptions[0] || "No description";
+				const maintainer = current?.maintainer || pkg.maintainers[0] || "Unknown";
 				const buildDateCell = showBuildDateColumn
 					? `
 						<td>
@@ -2302,13 +2295,13 @@
 					<tr class="${isActive ? "is-active" : ""}" data-package-row="${escapeHtml(pkg.name)}" aria-selected="${isActive ? "true" : "false"}">
 						<td>
 							<div class="table-name-row">
-								<div class="table-name">${escapeHtml(pkg.name)}</div>
+								<div class="table-name" title="${escapeHtml(pkg.name)}">${escapeHtml(pkg.name)}</div>
 								${homepageIcon}
 							</div>
-							<div class="table-description">${escapeHtml(latest?.description || pkg.descriptions[0] || "No description")}</div>
+							<div class="table-description" title="${escapeHtml(description)}">${escapeHtml(description)}</div>
 						</td>
 						<td class="version-cell">${renderNewestVersions(pkg)}</td>
-						<td class="maintainer-cell" title="${escapeHtml(current?.maintainer || pkg.maintainers[0] || "Unknown")}">${escapeHtml(current?.maintainer || pkg.maintainers[0] || "Unknown")}</td>
+						<td class="maintainer-cell"><span class="maintainer-text" title="${escapeHtml(maintainer)}">${escapeHtml(maintainer)}</span></td>
 						${buildDateCell}
 						<td class="artifact-cell"><span class="artifact-text" title="${escapeHtml(artifactName)}">${escapeHtml(artifactName)}</span></td>
 					</tr>
