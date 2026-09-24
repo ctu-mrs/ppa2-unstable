@@ -1,4 +1,4 @@
-# PPA2 Unstable
+# PPA2 Unstable · [Index](https://ctu-mrs.github.io/ppa2-unstable/)
 
 Personal Package Archive (PPA) for unstable ROS2 MRS deb packages.
 
