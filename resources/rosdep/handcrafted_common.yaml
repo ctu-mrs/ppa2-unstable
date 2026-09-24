@@ -39,7 +39,9 @@ pylon:
 pylon-supplementary-package-for-blaze:
   ubuntu: [pylon-supplementary-package-for-blaze]
 codemeter:
-  ubuntu: [codemeter]
+  ubuntu:
+    amd64: [codemeter]
+    arm64: [codemeter-lite]
 
 # other dependencies
 python3-jinja2:
